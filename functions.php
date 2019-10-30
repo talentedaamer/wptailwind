@@ -87,6 +87,21 @@ add_action( 'after_setup_theme', 'wptailwind_setup' );
 
 /*
  |-------------------------------------------------
+ | Content area width
+ |-------------------------------------------------
+ |
+ | Sets a global width to the content area
+ |
+ */
+if ( ! function_exists( 'wptailwind_content_width' ) ) :
+	function wptailwind_content_width() {
+		$GLOBALS[ 'content_width' ] = apply_filters( 'wptailwind_content_width', 640 );
+	}
+endif;
+add_action( 'after_setup_theme', 'wptailwind_content_width', 0 );
+
+/*
+ |-------------------------------------------------
  | Post meta posted_on
  |-------------------------------------------------
  |
@@ -244,3 +259,42 @@ if ( ! function_exists( 'wptailwind_post_thumbnail' ) ) :
 		<?php endif;
 	}
 endif;
+
+/*
+|-------------------------------------------------
+| Widget areas
+|-------------------------------------------------
+|
+| Register widget areas/sidebars for the theme
+| sidebar-1 is main sidebar used on posts and pages
+|
+*/
+function wptailwind_widgets_init() {
+	register_sidebar( array(
+		'name'          => esc_html__( 'Sidebar Primary', 'wptailwind' ),
+		'id'            => 'sidebar-1',
+		'description'   => esc_html__( 'Primary sidebar for posts and pages.', 'wptailwind' ),
+		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</section>',
+		'before_title'  => '<h2 class="widget-title">',
+		'after_title'   => '</h2>',
+	) );
+}
+add_action( 'widgets_init', 'wptailwind_widgets_init' );
+
+/*
+|-------------------------------------------------
+| Scripts & Styles
+|-------------------------------------------------
+|
+| Register and enqueue theme scripts and styles
+|
+*/
+function wptailwind_scripts() {
+	wp_enqueue_style( 'wptailwind-style', get_stylesheet_uri() );
+	
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		wp_enqueue_script( 'comment-reply' );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'wptailwind_scripts' );
