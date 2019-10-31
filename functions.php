@@ -208,19 +208,41 @@ if ( ! function_exists( 'wptailwind_entry_footer' ) ) :
 		edit_post_link(
 			sprintf(
 				wp_kses(
-				/* translators: %s: Name of current post. Only visible to screen readers */
 					__( 'Edit <span class="screen-reader-text">%s</span>', 'wptailwind' ),
-					array(
-						'span' => array(
-							'class' => array(),
-						),
-					)
+					[ 'span' => ['class' => [] ] ]
 				),
 				get_the_title()
 			),
 			'<span class="edit-link">',
 			'</span>'
 		);
+	}
+endif;
+
+
+/*
+|-------------------------------------------------
+| Page footer meta
+|-------------------------------------------------
+|
+| Display page footer edit page link
+|
+*/
+if ( ! function_exists( 'wptailwind_page_footer' ) ) :
+	function wptailwind_page_footer() {
+		if ( get_edit_post_link() ) :
+		edit_post_link(
+			sprintf(
+				wp_kses(
+					__( 'Edit <span class="screen-reader-text">%s</span>', 'wptailwind' ),
+					[ 'span' => ['class' => [] ] ]
+				),
+				get_the_title()
+			),
+			'<span class="edit-link">',
+			'</span>'
+		);
+		endif;
 	}
 endif;
 
