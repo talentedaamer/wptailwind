@@ -1,4 +1,4 @@
-// customizer
+// customizer js
 ( function( $ ) {
 
     // Site title and description.

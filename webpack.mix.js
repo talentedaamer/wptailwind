@@ -13,6 +13,6 @@ require('laravel-mix-tailwind');
  */
 
 mix.js('src/js/app.js', 'assets/js')
-    .sass('src/sass/style.scss', 'assets/css')
-    .tailwind()
-    .browserSync('http://wp52/');
+    .sass('src/sass/app.scss', 'assets/css')
+    .sass('src/sass/style.scss', './')
+    .tailwind();
