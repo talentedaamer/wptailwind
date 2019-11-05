@@ -333,14 +333,10 @@ add_action( 'wp_enqueue_scripts', 'wptailwind_scripts' );
 |
 */
 function wptailwind_get_search_form() {
-	$form = '<form role="search" method="get" class="search-form input-group" action="' . esc_url( home_url( '/' ) ) . '" xmlns="http://www.w3.org/1999/html">
-							<input type="search" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder="' . esc_attr_x( 'Search &hellip;', 'placeholder' ) . '" value="' . get_search_query() . '" name="s" />
-						<span class="input-group-btn">
-							<button type="submit" class="btn btn-primary">'. wptailwind_meta_icon( 'search', 16 ) .'</button>
-						</span>
-					</form>';
-	
-	return $form;
+	return '<form role="search" method="get" class="flex search-form" action="' . esc_url( home_url( '/' ) ) . '" xmlns="http://www.w3.org/1999/html">
+        <input type="search" class="wptw-input w-full" placeholder="' . esc_attr_x( 'Search &hellip;', 'placeholder' ) . '" value="' . get_search_query() . '" name="s" />
+        <button type="submit" class="w-auto flex justify-end items-center wptw-btn wptw-btn-primary">'. wptailwind_meta_icon( 'search', 18 ) .'</button>
+    </form>';
 }
 
 add_filter( 'get_search_form', 'wptailwind_get_search_form' );

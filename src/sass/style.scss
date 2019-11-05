@@ -21,6 +21,42 @@
  * silence is golden
  */
 
+.wptw-input {
+  @apply py-2;
+  @apply px-4;
+  @apply appearance-none;
+  @apply bg-gray-200;
+  @apply text-gray-700;
+  @apply leading-tight;
+  @apply border-2;
+  @apply border-gray-200;
+  &:focus {
+    @apply bg-white;
+    @apply border-indigo-700;
+    @apply outline-none;
+  }
+}
+
+.wptw-btn {
+  @apply py-2;
+  @apply px-4;
+  @apply bg-gray-700;
+  @apply text-white;
+  &:hover {
+    @apply bg-gray-800;
+  }
+  &:focus {
+    @apply outline-none;
+  }
+}
+
+.wptw-btn-primary {
+  @apply bg-indigo-700;
+  &:hover {
+    @apply bg-indigo-800;
+  }
+}
+
 .wptw-svg-icon {
   @apply inline-flex;
   & > svg {

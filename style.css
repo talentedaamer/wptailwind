@@ -21,6 +21,52 @@
  * silence is golden
  */
 
+.wptw-input {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: #edf2f7;
+  color: #4a5568;
+  line-height: 1.25;
+  border-width: 2px;
+  border-color: #edf2f7;
+}
+
+.wptw-input:focus {
+  background-color: #fff;
+  border-color: #4c51bf;
+  outline: 0;
+}
+
+.wptw-btn {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: #4a5568;
+  color: #fff;
+}
+
+.wptw-btn:hover {
+  background-color: #2d3748;
+}
+
+.wptw-btn:focus {
+  outline: 0;
+}
+
+.wptw-btn-primary {
+  background-color: #4c51bf;
+}
+
+.wptw-btn-primary:hover {
+  background-color: #434190;
+}
+
 .wptw-svg-icon {
   display: -webkit-inline-box;
   display: inline-flex;
