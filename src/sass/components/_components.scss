@@ -1,0 +1,12 @@
+a {
+  color: theme('colors.indigo-700');
+  &:hover {
+    color: theme('colors.blue-500');
+  }
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "headings";
