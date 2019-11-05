@@ -22,10 +22,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Theme constants
  */
 define( 'WPTAILWIND_VERSION', '1.0.0' );
-if ( ! defined( 'WPTAILWIND_DIR' ) )
+if ( ! defined( 'WPTAILWIND_DIR' ) ) {
 	define( 'WPTAILWIND_DIR', trailingslashit( get_template_directory() ) );
-if ( ! defined( 'WPTAILWIND_URI' ) )
+}
+if ( ! defined( 'WPTAILWIND_URI' ) ) {
 	define( 'WPTAILWIND_URI', trailingslashit( get_template_directory_uri() ) );
+}
 
 /*
  |-------------------------------------------------
@@ -123,12 +125,9 @@ if ( ! function_exists( 'wptailwind_posted_on' ) ) :
 			esc_html( get_the_modified_date() )
 		);
 		
-		$posted_on = sprintf(
-			esc_html_x( 'Posted on %s', 'post date', 'wptailwind' ),
-			'<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>'
-		);
+		$posted_on = '<a class="font-serif ml-1" href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>';
 		
-		echo '<span class="posted-on">' . $posted_on . '</span>'; // WPCS: XSS OK.
+		echo '<span class="posted-on wptw-svg-icon">' . wptailwind_meta_icon( 'clock' ) . $posted_on . '</span>';
 	}
 endif;
 
@@ -146,12 +145,8 @@ if ( ! function_exists( 'wptailwind_posted_by' ) ) :
 	 * Prints HTML with meta information for the current author.
 	 */
 	function wptailwind_posted_by() {
-		$byline = sprintf(
-			esc_html_x( 'by %s', 'post author', 'wptailwind' ),
-			'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>'
-		);
-		
-		echo '<span class="byline"> ' . $byline . '</span>'; // WPCS: XSS OK
+		$byline = '<a class="font-serif ml-1" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a>';
+		echo '<span class="posted-by wptw-svg-icon ml-2"> ' . wptailwind_meta_icon( 'user' ) . $byline . '</span>'; // WPCS: XSS OK
 	}
 endif;
 
@@ -209,7 +204,7 @@ if ( ! function_exists( 'wptailwind_entry_footer' ) ) :
 			sprintf(
 				wp_kses(
 					__( 'Edit <span class="screen-reader-text">%s</span>', 'wptailwind' ),
-					[ 'span' => ['class' => [] ] ]
+					[ 'span' => [ 'class' => [] ] ]
 				),
 				get_the_title()
 			),
@@ -231,17 +226,17 @@ endif;
 if ( ! function_exists( 'wptailwind_page_footer' ) ) :
 	function wptailwind_page_footer() {
 		if ( get_edit_post_link() ) :
-		edit_post_link(
-			sprintf(
-				wp_kses(
-					__( 'Edit <span class="screen-reader-text">%s</span>', 'wptailwind' ),
-					[ 'span' => ['class' => [] ] ]
+			edit_post_link(
+				sprintf(
+					wp_kses(
+						__( 'Edit <span class="screen-reader-text">%s</span>', 'wptailwind' ),
+						[ 'span' => [ 'class' => [] ] ]
+					),
+					get_the_title()
 				),
-				get_the_title()
-			),
-			'<span class="edit-link">',
-			'</span>'
-		);
+				'<span class="edit-link">',
+				'</span>'
+			);
 		endif;
 	}
 endif;
@@ -267,17 +262,17 @@ if ( ! function_exists( 'wptailwind_post_thumbnail' ) ) :
 		} ?>
 		
 		<?php if ( is_singular() ) : ?>
-			<div class="post-thumbnail-classes">
+            <div class="post-thumbnail-classes">
 				<?php the_post_thumbnail(); ?>
-			</div>
+            </div>
 		<?php else : ?>
-			<a class="post-thumbnail-classes" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
+            <a class="post-thumbnail-classes" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
 				<?php
 				the_post_thumbnail( 'post-thumbnail', [
-					'alt' => the_title_attribute( [ 'echo' => false ] ),
+					'alt' => the_title_attribute( [ 'echo' => FALSE ] ),
 				] );
 				?>
-			</a>
+            </a>
 		<?php endif;
 	}
 endif;
@@ -296,12 +291,13 @@ function wptailwind_widgets_init() {
 		'name'          => esc_html__( 'Sidebar Primary', 'wptailwind' ),
 		'id'            => 'sidebar-1',
 		'description'   => esc_html__( 'Primary sidebar for posts and pages.', 'wptailwind' ),
-		'before_widget' => '<section id="%1$s" class="widget %2$s">',
+		'before_widget' => '<section id="%1$s" class="mb-8 p-4 widget %2$s">',
 		'after_widget'  => '</section>',
-		'before_title'  => '<h2 class="widget-title">',
+		'before_title'  => '<h2 class="mb-4 widget-title">',
 		'after_title'   => '</h2>',
 	) );
 }
+
 add_action( 'widgets_init', 'wptailwind_widgets_init' );
 
 /*
@@ -313,10 +309,40 @@ add_action( 'widgets_init', 'wptailwind_widgets_init' );
 |
 */
 function wptailwind_scripts() {
+	// wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=PT+Sans:400,700|Playfair+Display:400,700&display=swap', '', WPTAILWIND_VERSION );
+	wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Lato:300,400,700|Raleway:400,700&display=swap', '', WPTAILWIND_VERSION );
 	wp_enqueue_style( 'wptailwind-style', get_stylesheet_uri() );
+	wp_enqueue_style( 'wptailwind-main-css', WPTAILWIND_URI . 'assets/css/app.css', '', WPTAILWIND_VERSION );
 	
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
+
 add_action( 'wp_enqueue_scripts', 'wptailwind_scripts' );
+
+
+/*
+|-------------------------------------------------
+| Search Form Formation
+|-------------------------------------------------
+|
+| custom formation for search form
+|
+| @return string
+|
+*/
+function wptailwind_get_search_form() {
+	$form = '<form role="search" method="get" class="search-form input-group" action="' . esc_url( home_url( '/' ) ) . '" xmlns="http://www.w3.org/1999/html">
+							<input type="search" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" placeholder="' . esc_attr_x( 'Search &hellip;', 'placeholder' ) . '" value="' . get_search_query() . '" name="s" />
+						<span class="input-group-btn">
+							<button type="submit" class="btn btn-primary">'. wptailwind_meta_icon( 'search', 16 ) .'</button>
+						</span>
+					</form>';
+	
+	return $form;
+}
+
+add_filter( 'get_search_form', 'wptailwind_get_search_form' );
+
+require WPTAILWIND_DIR . '/inc/functions-icons.php';

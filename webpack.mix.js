@@ -16,3 +16,6 @@ mix.js('src/js/app.js', 'assets/js')
     .sass('src/sass/app.scss', 'assets/css')
     .sass('src/sass/style.scss', './')
     .tailwind();
+
+// copy images
+mix.copy('src/images/*', 'assets/images' );

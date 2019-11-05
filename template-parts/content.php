@@ -18,17 +18,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class('mb-16'); ?>>
 	<?php
 	if ( is_singular() ) :
 		the_title( '<h1>', '</h1>' );
 	else :
-		the_title( '<h2><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
+		the_title( '<h2 class="mb-4"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
 	endif;
 	
 	if ( 'post' === get_post_type() ) :
-		wptailwind_posted_on();
-		wptailwind_posted_by();
+        ?>
+        <div class="mb-4">
+            <?php wptailwind_posted_on(); ?>
+            <?php wptailwind_posted_by(); ?>
+        </div>
+        <?php
 	endif;
 	
 	wptailwind_post_thumbnail();

@@ -20,3 +20,13 @@
 /**
  * silence is golden
  */
+
+.wptw-svg-icon {
+  @apply inline-flex;
+  & > svg {
+    height: 1em;
+    width: 1em;
+    position: relative;
+    top: .25em;
+  }
+}
