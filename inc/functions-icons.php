@@ -104,3 +104,10 @@ function wptailwind_meta_icon( $icon, $size = 16 ) {
 		'size' => $size
 	] );
 }
+
+function wptailwind_get_icon( $icon, $size = 24 ) {
+	return wptailwind_get_svg( [
+		'icon' => $icon,
+		'size' => $size
+	] );
+}
