@@ -29,8 +29,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	if ( 'post' === get_post_type() ) :
         ?>
         <div class="mb-4">
-            <?php wptailwind_posted_on(); ?>
-            <?php wptailwind_posted_by(); ?>
+            <?php
+            wptailwind_posted_on();
+            wptailwind_posted_by();
+            wptailwind_comment_link();
+            ?>
         </div>
         <?php
 	endif;
