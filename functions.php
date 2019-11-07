@@ -118,16 +118,20 @@ if ( ! function_exists( 'wptailwind_posted_on' ) ) :
 			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
 		}
 		
-		$time_string = sprintf( $time_string,
+		$time_string = sprintf(
+			$time_string,
 			esc_attr( get_the_date( DATE_W3C ) ),
 			esc_html( get_the_date() ),
 			esc_attr( get_the_modified_date( DATE_W3C ) ),
 			esc_html( get_the_modified_date() )
 		);
 		
-		$posted_on = '<a class="font-serif ml-1" href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>';
-		
-		echo '<span class="posted-on wptw-svg-icon">' . wptailwind_meta_icon( 'clock' ) . $posted_on . '</span>';
+		printf(
+			'<span class="posted-on wptw-svg-icon">%1$s<a class="font-serif ml-1" href="%2$s" rel="bookmark">%3$s</a></span>',
+			wptailwind_meta_icon( 'clock' ),
+			esc_url( get_permalink() ),
+			$time_string
+		);
 	}
 endif;
 
@@ -147,6 +151,27 @@ if ( ! function_exists( 'wptailwind_posted_by' ) ) :
 	function wptailwind_posted_by() {
 		$byline = '<a class="font-serif ml-1" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a>';
 		echo '<span class="posted-by wptw-svg-icon ml-2"> ' . wptailwind_meta_icon( 'user' ) . $byline . '</span>'; // WPCS: XSS OK
+	}
+endif;
+
+/*
+ |-------------------------------------------------
+ | Post meta comments
+ |-------------------------------------------------
+ |
+ | Display post meta comments or post comment link
+ | displayed only on post type 'post'.
+ |
+ */
+if ( ! function_exists( 'wptailwind_comment_link' ) ) :
+	function wptailwind_comment_link() {
+		if ( ! is_single() && ! post_password_required() && ( comments_open() || get_comments_number() ) ) : ?>
+            <span class="comments-link wptw-svg-icon ml-2">
+                <?php echo wptailwind_meta_icon( 'message-circle' ); ?>
+                <?php comments_popup_link( false, false, false, 'font-serif ml-1', false ); ?>
+            </span>
+		<?php endif;
+  
 	}
 endif;
 
@@ -179,25 +204,6 @@ if ( ! function_exists( 'wptailwind_entry_footer' ) ) :
 				/* translators: 1: list of tags. */
 				printf( '<span class="tags-links">' . esc_html__( 'Tagged %1$s', 'wptailwind' ) . '</span>', $tags_list ); // WPCS: XSS OK.
 			}
-		}
-		
-		if ( ! is_single() && ! post_password_required() && ( comments_open() || get_comments_number() ) ) {
-			echo '<span class="comments-link">';
-			comments_popup_link(
-				sprintf(
-					wp_kses(
-					/* translators: %s: post title */
-						__( 'Leave a Comment<span class="screen-reader-text"> on %s</span>', 'wptailwind' ),
-						array(
-							'span' => array(
-								'class' => array(),
-							),
-						)
-					),
-					get_the_title()
-				)
-			);
-			echo '</span>';
 		}
 		
 		edit_post_link(
@@ -339,6 +345,33 @@ function wptailwind_get_search_form() {
     </form>';
 }
 
+if ( ! function_exists( 'wptailwind_posts_pagination' ) ) :
+	/**
+	 * Documentation for function.
+	 */
+	function wptailwind_posts_pagination() {
+		the_posts_pagination(
+			array(
+				'mid_size'  => 2,
+				// 'prev_next' => false,
+				'before_page_number' => '<span class="bg-indigo-700 px-2 py-2 text-white">',
+				'after_page_number' => '</span>',
+				'prev_text' => sprintf(
+					'%s <span class="nav-prev-text">%s</span>',
+					wptailwind_get_icon( 'chevron-left' ),
+					__( 'Newer posts', 'wptailwind' )
+				),
+				'next_text' => sprintf(
+					'<span class="nav-next-text">%s</span> %s',
+					__( 'Older posts', 'wptailwind' ),
+					wptailwind_get_icon( 'chevron-right' )
+				),
+			)
+		);
+	}
+endif;
+
 add_filter( 'get_search_form', 'wptailwind_get_search_form' );
 
 require WPTAILWIND_DIR . '/inc/functions-icons.php';
+require WPTAILWIND_DIR . '/inc/functions-header-image.php';
