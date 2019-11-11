@@ -18,6 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// TODO: Remove dev env after completion
+define( 'WPTW_ENV', 'development' );
+
 /**
  * Theme constants
  */
@@ -150,7 +153,7 @@ if ( ! function_exists( 'wptailwind_posted_by' ) ) :
 	 */
 	function wptailwind_posted_by() {
 		$byline = '<a class="font-serif ml-1" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a>';
-		echo '<span class="posted-by wptw-svg-icon ml-2"> ' . wptailwind_meta_icon( 'user' ) . $byline . '</span>'; // WPCS: XSS OK
+		echo '<span class="posted-by wptw-svg-icon ml-4"> ' . wptailwind_meta_icon( 'user' ) . $byline . '</span>'; // WPCS: XSS OK
 	}
 endif;
 
@@ -166,7 +169,7 @@ endif;
 if ( ! function_exists( 'wptailwind_comment_link' ) ) :
 	function wptailwind_comment_link() {
 		if ( ! is_single() && ! post_password_required() && ( comments_open() || get_comments_number() ) ) : ?>
-            <span class="comments-link wptw-svg-icon ml-2">
+            <span class="comments-link wptw-svg-icon ml-4">
                 <?php echo wptailwind_meta_icon( 'message-circle' ); ?>
                 <?php comments_popup_link( false, false, false, 'font-serif ml-1', false ); ?>
             </span>
@@ -185,24 +188,27 @@ endif;
 |
 */
 if ( ! function_exists( 'wptailwind_entry_footer' ) ) :
-	/**
-	 * Prints HTML with meta information for the categories, tags and comments.
-	 */
 	function wptailwind_entry_footer() {
-		// Hide category and tag text for pages.
+        // display only on post type 'post'
 		if ( 'post' === get_post_type() ) {
-			/* translators: used between list items, there is a space after the comma */
 			$categories_list = get_the_category_list( esc_html__( ', ', 'wptailwind' ) );
 			if ( $categories_list ) {
-				/* translators: 1: list of categories. */
-				printf( '<span class="cat-links">' . esc_html__( 'Posted in %1$s', 'wptailwind' ) . '</span>', $categories_list ); // WPCS: XSS OK.
+				printf(
+					'<span class="cat-links wptw-svg-icon">%1$s<span class="font-serif ml-1">%2$s</span></span>',
+					wptailwind_meta_icon( 'folder' ),
+					$categories_list
+				);
 			}
 			
 			/* translators: used between list items, there is a space after the comma */
 			$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'wptailwind' ) );
 			if ( $tags_list ) {
 				/* translators: 1: list of tags. */
-				printf( '<span class="tags-links">' . esc_html__( 'Tagged %1$s', 'wptailwind' ) . '</span>', $tags_list ); // WPCS: XSS OK.
+				printf(
+                    '<span class="tags-links wptw-svg-icon ml-4">%1$s<span class="font-serif ml-1">%2$s</span></span>',
+                    wptailwind_meta_icon( 'hash' ),
+                    $tags_list
+                );
 			}
 		}
 		
@@ -214,8 +220,10 @@ if ( ! function_exists( 'wptailwind_entry_footer' ) ) :
 				),
 				get_the_title()
 			),
-			'<span class="edit-link">',
-			'</span>'
+			'<span class="edit-link wptw-svg-icon ml-4">' . wptailwind_meta_icon('edit'),
+			'</span>',
+            null,
+            'ml-1'
 		);
 	}
 endif;
@@ -297,9 +305,9 @@ function wptailwind_widgets_init() {
 		'name'          => esc_html__( 'Sidebar Primary', 'wptailwind' ),
 		'id'            => 'sidebar-1',
 		'description'   => esc_html__( 'Primary sidebar for posts and pages.', 'wptailwind' ),
-		'before_widget' => '<section id="%1$s" class="mb-8 p-4 widget %2$s">',
+		'before_widget' => '<section id="%1$s" class="mb-8 widget %2$s">',
 		'after_widget'  => '</section>',
-		'before_title'  => '<h2 class="mb-4 widget-title">',
+		'before_title'  => '<h4 class="widget-title text-gray-900 mb-4 uppercase">',
 		'after_title'   => '</h2>',
 	) );
 }
@@ -341,7 +349,7 @@ add_action( 'wp_enqueue_scripts', 'wptailwind_scripts' );
 function wptailwind_get_search_form() {
 	return '<form role="search" method="get" class="flex search-form" action="' . esc_url( home_url( '/' ) ) . '" xmlns="http://www.w3.org/1999/html">
         <input type="search" class="wptw-input w-full" placeholder="' . esc_attr_x( 'Search &hellip;', 'placeholder' ) . '" value="' . get_search_query() . '" name="s" />
-        <button type="submit" class="w-auto flex justify-end items-center wptw-btn wptw-btn-primary">'. wptailwind_meta_icon( 'search', 18 ) .'</button>
+        <button type="submit" class="w-auto flex justify-end items-center wptw-btn">'. wptailwind_meta_icon( 'search', 18 ) .'</button>
     </form>';
 }
 
@@ -372,6 +380,69 @@ if ( ! function_exists( 'wptailwind_posts_pagination' ) ) :
 endif;
 
 add_filter( 'get_search_form', 'wptailwind_get_search_form' );
+
+
+if ( ! function_exists( 'wptailwind_body_classes' ) ) {
+	function wptailwind_body_classes( $classes ) {
+  
+		// Adds a class of group-blog to blogs with more than 1 published author.
+		if ( is_multi_author() ) {
+			$classes[] = 'group-blog';
+		}
+		// Adds a class of hfeed to non-singular pages.
+		if ( ! is_singular() ) {
+			$classes[] = 'hfeed';
+		}
+		
+		// get layout container type.
+		// $container_typ = get_theme_mod( 'bp_container_type' );
+		// Adds class of 'bp-boxed-layout' if boxed layout selected.
+		// if ( 'container' == $container_typ ) {
+		// 	$classes[] = 'bp-boxed-layout';
+		// }
+  
+  
+		
+		return $classes;
+	}
+}
+add_filter( 'body_class', 'wptailwind_body_classes' );
+
+if ( ! function_exists( 'wptailwind_post_classes' ) ) {
+	function wptailwind_post_classes( $classes, $class, $post_id ) {
+		// echo '<pre>';
+		// print_r($post_id);
+		// print_r($classes);
+		// echo '</pre>';
+		// if ( ! is_admin() ) { //make sure we are in the dashboard
+		// 	return $classes;
+		// }
+		// $screen = get_current_screen(); //verify which page we're on
+		// if ('my-custom-type' != $screen->post_type && 'edit' != $screen->base) {
+		// 	return $classes;
+		// }
+		// //check if some meta field is set
+		// $profile_incomplete = get_post_meta($post_id, 'profile_incomplete', true);
+		// if ('yes' == $profile_incomplete) {
+		// 	$classes[] = 'profile_incomplete'; //add a custom class to highlight this row in the table
+		// }
+        
+        // if ( is_sticky( $post_id ) ) {
+	     //    $classes[] = 'bg-gray-200';
+        // }
+		
+		// $stickies = get_option( 'sticky_posts' );
+		// is_array( $stickies ) && in_array( $post_id, $stickies )
+		
+        if ( ! is_singular() && is_sticky() ) {
+			$classes[] = 'p-10 bg-gray-100 border-2 border-gray-300';
+		}
+		
+		return $classes;
+	}
+}
+add_filter( 'post_class', 'wptailwind_post_classes', 10, 3 );
+
 
 require WPTAILWIND_DIR . '/inc/functions-icons.php';
 require WPTAILWIND_DIR . '/inc/functions-header-image.php';

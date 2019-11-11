@@ -1,11 +1,55 @@
+@import "../mixins/mixins-master";
+@import "../theme-config";
+
+@tailwind base;
+
+/*
+ |-------------------------------------------------
+ | Links
+ |-------------------------------------------------
+ |
+ | theme base link normal and hover style
+ | meta and other link styles
+ |
+ */
+
 a {
-  color: theme('colors.indigo-700');
-  &:hover {
-    color: theme('colors.blue-500');
+  color: $link_color;
+  text-decoration: $link_decoration;
+  background-color: transparent;
+
+  @include hover {
+    color: $link_hover_color;
+    text-decoration: $link_hover_decoration;
   }
 }
 
-@tailwind base;
+a:not([href]):not([tabindex]) {
+  color: inherit;
+  text-decoration: $link_decoration;
+  @include hover-focus {
+    color: inherit;
+    text-decoration: $link_hover_decoration;
+  }
+  &:focus {
+    outline: 0;
+  }
+}
+
+.post-meta-header,
+.post-meta-footer {
+  a {
+    color: $meta_link_color;
+    @include hover {
+      color: $meta_link_hover_color;
+      text-decoration: $link_hover_decoration;
+    }
+  }
+  .wptw-svg-icon > svg {
+    color: $meta_link_color;
+  }
+}
+
 @tailwind components;
 @tailwind utilities;
 

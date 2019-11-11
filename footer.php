@@ -19,22 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<footer id="colophon" class="site-footer bg-gray-700">
-    <div class="container bg-gray-200">
-        <p class="px-2 py-4">
-			<?php
-			printf(
-				esc_html__( 'Proudly powered by %s', 'wptailwind' ),
-				'WordPress'
-			);
-			?>
-        </p>
-    </div>
-</footer>
-
-
-
-<div class="container text-center mt-4 mb-10">
+<div class="footer-widgets bg-gray-200">
+    <div class="container px-4 text-center py-16">
 	<?php
 	$icons = array(
 		'hash',
@@ -70,11 +56,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	);
 	foreach ( $icons as $icon ) {
 		?>
-        <span class="p-4 mx-2 bg-indigo-700 text-white inline-block mb-4"><?php echo wptailwind_meta_icon( $icon, '40' ); ?></span>
+        <span class="p-2 mx-1 bg-secondary-700 text-white inline-block mb-2 leading-none">
+            <?php echo wptailwind_meta_icon( $icon, '20' ); ?>
+        </span>
 		<?php
 	}
 	?>
 </div>
+</div>
+
+<footer id="colophon" class="site-footer">
+    <div class="container px-4">
+        <p class="py-4 text-gray-700 text-sm text-center">
+			<?php
+			printf(
+				esc_html__( 'Proudly powered by %s', 'wptailwind' ),
+				'WordPress'
+			);
+			?>
+        </p>
+    </div>
+</footer>
 
 <?php wp_footer(); ?>
 

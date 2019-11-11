@@ -6,11 +6,10 @@ module.exports = {
             center: true,
         },
         screens: {
-            xs: '320px',
             sm: '640px',
             md: '768px',
             lg: '1024px',
-            xl: '1280px',
+            xl: '1170px',
         },
         fontFamily: {
             sans: [
@@ -28,6 +27,7 @@ module.exports = {
         colors: {
             transparent: 'transparent',
             primary: colors.indigo,
+            secondary: colors.gray,
             black: colors.black,
             white: colors.white,
             gray: colors.gray,

@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	
 	if ( 'post' === get_post_type() ) :
         ?>
-        <div class="mb-4">
+        <div class="post-meta-header mb-4">
             <?php
             wptailwind_posted_on();
             wptailwind_posted_by();
@@ -40,16 +40,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	
 	wptailwind_post_thumbnail();
 	
-	the_content( sprintf(
-		wp_kses(
-			__( 'Read More<span class="screen-reader-text"> "%s"</span>', 'wptailwind' ),
-			array( 'span' => array( 'class' => array() ) )
-		),
-		get_the_title()
-	) );
+	if ( WPTW_ENV == 'development' ) {
+	    the_excerpt();
+    } else {
+		the_content( sprintf(
+			wp_kses(
+				__( 'Read More<span class="screen-reader-text"> "%s"</span>', 'wptailwind' ),
+				array( 'span' => array( 'class' => array() ) )
+			),
+			get_the_title()
+		) );
+	}
 	
 	wp_link_pages();
 	
-	wptailwind_entry_footer();
 	?>
+	<div class="post-meta-footer mt-4">
+        <?php wptailwind_entry_footer(); ?>
+    </div>
 </article>

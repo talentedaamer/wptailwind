@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php wp_head(); ?>
 </head>
 
-<body <?php body_class( 'font-sans font-light text-lg leading-relaxed' ); ?>>
+<body <?php body_class( 'font-sans font-light text-base leading-relaxed' ); ?>>
 
 <!--wptw-header-->
 <header id="wptw-header" class="wptw-header w-full bg-white shadow mb-16">
