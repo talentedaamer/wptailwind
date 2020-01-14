@@ -12,6 +12,12 @@ Lightening Fast WordPress Theme.
 
 WordPress theme that has to be lightweight, super fast and clean.
 
+== For Developers ==
+1. `cd` to `wordpress-installation/wp-content/themes/`
+2. `git clone https://github.com/talentedaamer/wptailwind.git` to clone the repo
+3. `npm install` to install the packages
+4. `npm run dev` to compile the assets or `npm run watch` to watch for changes
+
 == Installation ==
 
 1. In your WordPress Dashboard, go to Appearance -> Themes and click the Add New button.

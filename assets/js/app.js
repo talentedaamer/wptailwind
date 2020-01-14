@@ -158,9 +158,9 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/aamer/projects-wordpress/wp52/wp-content/themes/wptailwind/src/js/app.js */"./src/js/app.js");
-__webpack_require__(/*! /Users/aamer/projects-wordpress/wp52/wp-content/themes/wptailwind/src/sass/app.scss */"./src/sass/app.scss");
-module.exports = __webpack_require__(/*! /Users/aamer/projects-wordpress/wp52/wp-content/themes/wptailwind/src/sass/style.scss */"./src/sass/style.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wp53/wp-content/themes/wptailwind/src/js/app.js */"./src/js/app.js");
+__webpack_require__(/*! /Applications/MAMP/htdocs/wp53/wp-content/themes/wptailwind/src/sass/app.scss */"./src/sass/app.scss");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/wp53/wp-content/themes/wptailwind/src/sass/style.scss */"./src/sass/style.scss");
 
 
 /***/ })

@@ -1,7 +1,7 @@
 {
     "/assets/js/app.js": "/assets/js/app.js",
-    "/assets/css/app.css": "/assets/css/app.css",
     "/style.css": "/style.css",
     "/assets/images/header.min.jpg": "/assets/images/header.min.jpg",
-    "/assets/images/wptw-icons.svg": "/assets/images/wptw-icons.svg"
+    "/assets/images/wptw-icons.svg": "/assets/images/wptw-icons.svg",
+    "/assets/css/app.css": "/assets/css/app.css"
 }
