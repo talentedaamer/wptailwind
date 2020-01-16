@@ -399,43 +399,6 @@ if ( !function_exists( 'wptailwind_posts_pagination' ) ) :
     }
 endif;
 
-
-/**
- * Astra Pagination
- */
-if ( ! function_exists( 'astra_number_pagination' ) ) {
-    
-    /**
-     * Astra Pagination
-     *
-     * @since 1.0.0
-     * @return void            Generate & echo pagination markup.
-     */
-    function astra_number_pagination() {
-        global $numpages;
-        $enabled = apply_filters( 'astra_pagination_enabled', true );
-        
-        if ( isset( $numpages ) && $enabled ) {
-            ob_start();
-            echo "<div class='ast-pagination'>";
-            the_posts_pagination(
-                array(
-                    'prev_text'    => astra_default_strings( 'string-blog-navigation-previous', false ),
-                    'next_text'    => astra_default_strings( 'string-blog-navigation-next', false ),
-                    'taxonomy'     => 'category',
-                    'in_same_term' => true,
-                )
-            );
-            echo '</div>';
-            $output = ob_get_clean();
-            echo apply_filters( 'astra_pagination_markup', $output ); // WPCS: XSS OK.
-        }
-    }
-}
-
-add_action( 'astra_pagination', 'astra_number_pagination' );
-
-
 if ( !function_exists( 'wptailwind_body_classes' ) ) {
     function wptailwind_body_classes( $classes )
     {
@@ -507,3 +470,17 @@ require WPTW_DIR_PATH . 'inc/loop.php';
 require WPTW_DIR_PATH . 'inc/add-action-hooks.php';
 require WPTW_DIR_PATH . 'inc/add-filter-hooks.php';
 require WPTW_DIR_PATH . 'inc/template-functions.php';
+
+add_action( 'wptw_before_header', 'wptw_before_header_cb' );
+function wptw_before_header_cb() {
+    $contents = file_get_contents( get_parent_theme_file_path( 'inc/header.json' ) );
+    $header = json_decode( $contents, true );
+    if ( $header ) {
+        $header = $header['header'];
+        $id = $header['id'];
+        $class = $header['class'];
+        ?>
+        <div id="<?php echo $id; ?>" class="<?php echo $class; ?>"></div>
+        <?php
+    }
+}

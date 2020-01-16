@@ -22,14 +22,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
+    <?php do_action( 'wptw_before_head' ); ?>
     <meta charset="<?php bloginfo( 'charset' ); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="https://gmpg.org/xfn/11">
 	
 	<?php wp_head(); ?>
+    <?php do_action( 'wptw_after_head' ); ?>
 </head>
-
 <body <?php body_class( 'font-sans font-light text-base leading-relaxed' ); ?>>
+<?php do_action( 'wptw_before_header' ); ?>
 
 <!--wptw-header-->
 <header id="wptw-header" class="wptw-header w-full bg-white shadow mb-16">
@@ -86,3 +88,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <!--end:wptw-header-image-->
 </header>
 <!--end:wptw-header-->
+
+<?php
+do_action( 'wptw_after_header' );
+?>

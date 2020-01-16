@@ -79,6 +79,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 </footer>
 
 <?php wp_footer(); ?>
-
+<?php do_action( 'wptw_after_footer' ); ?>
 </body>
 </html>
