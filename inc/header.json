@@ -1,0 +1,60 @@
+{
+    "header": {
+        "id" : "site-header",
+        "class": "main-header",
+        "rows": [
+            {
+                "topBar": [
+                    {
+                        "id" : "top-bar",
+                        "class": "row topbar",
+                        "columns": [
+                            {
+                                "contact": [
+                                    {
+                                        "class": "col-md-4 header-contact",
+                                        "content": "phone: +921231234567"
+                                    }
+                                ]
+                            },
+                            {
+                                "social": [
+                                    {
+                                        "class": "col-md-8 header-social",
+                                        "content": "facebook, twitter, linkedin"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "mainHeader": [
+                    {
+                        "id" : "main-header",
+                        "class": "row main-header",
+                        "columns": [
+                            {
+                                "siteLogo": [
+                                    {
+                                        "class": "col-md-4 site-logo",
+                                        "content": "Logo Image"
+                                    }
+                                ]
+                            },
+                            {
+                                "menuRight": [
+                                    {
+                                        "class": "col-md-8 menu-rightl",
+                                        "content": "facebook, twitter, linkedin"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
