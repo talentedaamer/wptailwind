@@ -53,15 +53,15 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
         <!--end:wptw-logo-wrap-->
         
-        <!--wptc-menu-toggle-->
-        <div class="wptc-menu-toggle block lg:hidden">
+        <!--wptw-menu-toggle-->
+        <div class="wptw-menu-toggle block lg:hidden">
             <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-teal-500 appearance-none focus:outline-none">
                 <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path></svg>
             </button>
         </div>
-        <!--end:wptc-menu-toggle-->
+        <!--end:wptw-menu-toggle-->
 
-        <!--wptc-primary-menu-wrap-->
+        <!--wptw-primary-menu-wrap-->
         <div class="wptw-primary-menu-wrap w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 md:bg-transparent z-20 bg-white" id="nav-content">
 	        <?php
 	        wp_nav_menu( [
@@ -72,7 +72,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	        ] );
 	        ?>
         </div>
-        <!--end:wptc-primary-menu-wrap-->
+        <!--end:wptw-primary-menu-wrap-->
     </div>
 
     <!--wptw-header-image-->

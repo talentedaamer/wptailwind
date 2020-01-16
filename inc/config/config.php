@@ -3,7 +3,7 @@
  * layout configurations
  */
 
-function wptc_layouts() {
+function wptw_layouts() {
 	return [
 		'left_sidebar' => [
 			'label' => __( 'Left Sidebar', 'wptailwind' )
@@ -17,7 +17,7 @@ function wptc_layouts() {
 	];
 }
 
-function wptc_layout_type() {
+function wptw_layout_type() {
 	return [
 		'boxed' => [
 			'label' => __( 'Boxed Layout', 'wptailwind' )
@@ -31,7 +31,7 @@ function wptc_layout_type() {
 /**
  * color configurations
  */
-function wptc_colors() {
+function wptw_colors() {
 	return [
 		'light' => [
 			'label' => __( 'Light', 'wptailwind' ),

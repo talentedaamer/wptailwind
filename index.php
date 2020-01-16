@@ -26,7 +26,7 @@ get_header(); ?>
 			/**
 			 * standard wordpress loop
 			 */
-			do_action( 'wptc_loop' );
+			do_action( 'wptw_loop' );
 			?>
         </div>
         
