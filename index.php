@@ -23,20 +23,10 @@ get_header(); ?>
     <div class="content-sidebar-wrap flex -mx-4">
         <div class="w-full sm:w-1/3 md:w-2/3 lg:w-3/4 xl:w-3/4 px-4">
 			<?php
-			if ( have_posts() ) :
-				// TODO: enable disable via composer
-				if ( is_home() && ! is_front_page() ) :
-					single_post_title();
-				endif;
-				
-				while ( have_posts() ) : the_post();
-					get_template_part( 'template-parts/content', get_post_type() );
-				endwhile;
-				
-				wptailwind_posts_pagination();
-			else :
-				get_template_part( 'template-parts/content', 'none' );
-			endif;
+			/**
+			 * standard wordpress loop
+			 */
+			do_action( 'wptc_loop' );
 			?>
         </div>
         

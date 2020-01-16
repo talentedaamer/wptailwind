@@ -1,0 +1,12 @@
+.widget {
+  margin: 0 0 1.5em;
+
+  select {
+    max-width: 100%;
+  }
+}
+
+// widget recent posts
+@import "widget_recent_posts";
+
+// other widgets scss

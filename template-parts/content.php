@@ -40,17 +40,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	
 	wptailwind_post_thumbnail();
 	
-	if ( WPTW_ENV == 'development' ) {
-	    the_excerpt();
-    } else {
-		the_content( sprintf(
-			wp_kses(
-				__( 'Read More<span class="screen-reader-text"> "%s"</span>', 'wptailwind' ),
-				array( 'span' => array( 'class' => array() ) )
-			),
-			get_the_title()
-		) );
-	}
+    the_content( sprintf(
+        wp_kses(
+            __( 'Read More<span class="screen-reader-text"> "%s"</span>', 'wptailwind' ),
+            array( 'span' => array( 'class' => array() ) )
+        ),
+        get_the_title()
+    ) );
 	
 	wp_link_pages();
 	
