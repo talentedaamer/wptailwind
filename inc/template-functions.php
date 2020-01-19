@@ -138,10 +138,10 @@ function wptw_comments_nav() {
 	endif;
 }
 
-add_filter( 'previous_comments_link_attributes', function () {
-	return 'class="wptw-btn wptw-btn-sm"';
-} );
-
-add_filter( 'next_comments_link_attributes', function () {
-	return 'class="wptw-btn wptw-btn-sm"';
-} );
+// add_filter( 'previous_comments_link_attributes', function () {
+// 	return 'class="wptw-btn wptw-btn-sm"';
+// } );
+//
+// add_filter( 'next_comments_link_attributes', function () {
+// 	return 'class="wptw-btn wptw-btn-sm"';
+// } );

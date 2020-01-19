@@ -48,22 +48,32 @@ if ( post_password_required() ) {
 			}
 			?>
         </h2>
-    
-        <?php
-        
-        wptw_comments_nav();
-        
-		wp_list_comments( array(
-			'short_ping' => true,
-		) );
 		
-		// TODO: comments navigation
+		<?php wptw_comments_nav(); ?>
+
+        <ol class="comment-list">
+			<?php
+			wp_list_comments( array(
+				'style'      => 'ol',
+				'short_ping' => true,
+			) );
+			?>
+        </ol>
 		
-		if ( ! comments_open() ) :
-			esc_html_e( 'Comments closed.', 'wptailwind' );
+		<?php wptw_comments_nav(); ?>
+		
+		<?php
+		if ( ! comments_open() && '0' != get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :
+			?>
+            <p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'wptailwind' ); ?></p>
+		<?php
 		endif;
 	
 	endif;
+	
+	/**
+	 * comments form fields are overwritten by filters
+	 */
 	comment_form();
 	?>
 </div>

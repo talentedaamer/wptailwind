@@ -450,3 +450,43 @@ require WPTW_DIR_PATH . 'inc/add-filter-hooks.php';
 require WPTW_DIR_PATH . 'inc/template-functions.php';
 
 require WPTW_DIR_PATH . 'inc/layout-html-classes.php';
+
+// Comments form.
+// TODO: update all fields with sprintf function
+add_filter( 'comment_form_default_fields', 'wptw_comment_form_fields' );
+function wptw_comment_form_fields( $fields ) {
+	$current_commenter  = wp_get_current_commenter();
+	$is_email_req       = get_option( 'require_name_email' );
+	$is_html5_supported = current_theme_supports( 'html5', 'comment-form' ) ? 1 : 0;
+	$req_attribute      = ( $is_html5_supported ? " required" : " aria-required='true'" );
+	$req_label          = $is_email_req ? ' <span>*</span>' : '';
+	$req_field          = $is_email_req ? $req_attribute : '';
+	$consent            = empty( $current_commenter[ 'comment_author_email' ] ) ? '' : ' checked="checked"';
+	$fields             = array(
+		'author'  => '<div class="field-wrap comment-form-author mb-4"><label class="block" for="author">' . __( 'Name', 'wptailwind' ) . $req_label . '</label> ' .
+		             '<input class="wptw-input" id="author" name="author" type="text" value="' . esc_attr( $current_commenter[ 'comment_author' ] ) . '" size="30"' . $req_field . '></div>',
+		'email'   => '<div class="field-wrap comment-form-email mb-4"><label class="block" for="email">' . __( 'Email', 'wptailwind' ) . $req_label . '</label> ' .
+		             '<input class="wptw-input" id="email" name="email" ' . ( $is_html5_supported ? 'type="email"' : 'type="text"' ) . ' value="' . esc_attr( $current_commenter[ 'comment_author_email' ] ) . '" size="30"' . $req_field . '></div>',
+		'url'     => '<div class="field-wrap comment-form-url mb-4"><label class="block" for="url">' . __( 'Website', 'wptailwind' ) . '</label> ' .
+		             '<input class="wptw-input" id="url" name="url" ' . ( $is_html5_supported ? 'type="url"' : 'type="text"' ) . ' value="' . esc_attr( $current_commenter[ 'comment_author_url' ] ) . '" size="30"></div>',
+		'cookies' => '<div class="field-wrap form-check comment-form-cookies-consent mb-4"><input class="mr-2 leading-tight" id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"' . $consent . ' /> ' .
+		             '<label class="form-check-label" for="wp-comment-cookies-consent">' . __( 'Save my name, email, and website in this browser for the next time I comment', 'wptailwind' ) . '</label></div>',
+	);
+	
+	return $fields;
+}
+
+add_filter( 'comment_form_defaults', 'wptw_comment_form' );
+function wptw_comment_form( $args ) {
+	$args[ 'comment_field' ] = sprintf(
+		'<div class="field-wrap comment-form-comment mb-4">%s %s</div>',
+		sprintf(
+			'<label class="block" for="comment">%s</label>',
+			_x( 'Comment', 'wptailwind' )
+		),
+		'<textarea id="comment" class="wptw-input w-full" name="comment" cols="45" rows="4" maxlength="65525" required="required"></textarea>'
+	);
+	$args[ 'class_submit' ]  = 'wptw-btn';
+	
+	return $args;
+}
