@@ -11,28 +11,35 @@
  |
  */
 
-/**
- * exit if accessed directly
- */
-if ( ! defined( 'ABSPATH' ) ) {
+# exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 get_header(); ?>
-
-<?php
-while ( have_posts() ) : the_post();
 	
-	get_template_part( 'template-parts/content', 'page' );
-	
-	// TODO: comment fields validation
-	if ( comments_open() || get_comments_number() ) :
-		comments_template();
-	endif;
+	<div class="container px-4">
+		<div <?php wptw_content_sidebar_class(); ?>>
+			<div <?php wptw_content_class(); ?>>
+				<?php
+				/**
+				 * standard wordpress loop
+				 * @hooked: wptw_do_loop
+				 */
+				do_action( 'wptw_loop' );
+				?>
+			</div>
+			
+			<div <?php wptw_sidebar_class(); ?>>
+				<?php
+				/**
+				 * standard wordpress sidebar
+				 * @hooked: wptw_do_sidebar
+				 */
+				do_action( 'wptw_sidebar' );
+				?>
+			</div>
+		</div>
+	</div>
 
-endwhile;
-?>
-
-
-<?php get_sidebar(); ?>
 <?php get_footer(); ?>

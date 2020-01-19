@@ -10,28 +10,33 @@
  |
  */
 
-/**
- * exit if accessed directly
- */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+# exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) {
+    exit;
 }
 
 get_header(); ?>
 
 <div class="container px-4">
-    <div class="content-sidebar-wrap flex -mx-4">
-        <div class="w-full sm:w-1/3 md:w-2/3 lg:w-3/4 xl:w-3/4 px-4">
-			<?php
-			/**
-			 * standard wordpress loop
-			 */
-			do_action( 'wptw_loop' );
-			?>
+    <div <?php wptw_content_sidebar_class(); ?>>
+        <div <?php wptw_content_class(); ?>>
+            <?php
+            /**
+             * standard wordpress loop
+             * @hooked: wptw_do_loop
+             */
+            do_action( 'wptw_loop' );
+            ?>
         </div>
-        
-        <div class="w-full sm:w-1/3 md:w-1/3 lg:w-1/4 xl:w-1/4 px-4">
-		    <?php get_sidebar(); ?>
+
+        <div <?php wptw_sidebar_class(); ?>>
+            <?php
+            /**
+             * standard wordpress sidebar
+             * @hooked: wptw_do_sidebar
+             */
+            do_action( 'wptw_sidebar' );
+            ?>
         </div>
     </div>
 </div>
