@@ -12,15 +12,15 @@
  */
 
 # exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 get_header(); ?>
-	
-	<div class="container px-4">
-		<div <?php wptw_content_sidebar_class(); ?>>
-			<div <?php wptw_content_class(); ?>>
+
+    <div class="container px-4">
+        <div <?php wptw_content_sidebar_class(); ?>>
+            <div <?php wptw_content_class(); ?>>
 				<?php
 				/**
 				 * standard wordpress loop
@@ -28,9 +28,9 @@ get_header(); ?>
 				 */
 				do_action( 'wptw_loop' );
 				?>
-			</div>
-			
-			<div <?php wptw_sidebar_class(); ?>>
+            </div>
+
+            <div <?php wptw_sidebar_class(); ?>>
 				<?php
 				/**
 				 * standard wordpress sidebar
@@ -38,8 +38,8 @@ get_header(); ?>
 				 */
 				do_action( 'wptw_sidebar' );
 				?>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 
 <?php get_footer(); ?>

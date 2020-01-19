@@ -39,6 +39,8 @@ function wptw_get_template_part( $slug, $name = '' ) {
 			$template      = file_exists( $base_template ) ? $base_template : '';
 		}
 		
+		$template = apply_filters( 'wptw_get_template_part', $template );
+		
 		# cache found template for rest of loop
 		wp_cache_set( $cache_key, $template, 'wctw_cache' );
 	}
@@ -70,4 +72,42 @@ function wptw_home_single_post_title() {
  */
 function wptw_do_sidebar( $sidebar = '' ) {
 	get_sidebar( $sidebar );
+}
+
+function wptw_do_archive_page_title() {
+	if ( is_archive() ) {
+		printf(
+			'<div class="archive-page-header mb-8"><h1 class="archive-title">%1$s</h1><div class="archive-description mt-2">%2$s</div></div>',
+			get_the_archive_title(),
+			get_the_archive_description()
+		);
+	}
+}
+
+function wptw_do_search_page_title() {
+	if ( is_search() ) {
+		printf(
+			'<div class="archive-page-header mb-8"><h1 class="archive-title">%1$s</h1></div>',
+			printf(
+				__( 'Results Filtered by: %s', 'wptailwind' ),
+				get_search_query()
+			)
+		);
+	}
+}
+
+function wptw_get_search_template_part( $template ) {
+	if ( is_search() ) {
+		echo ' ## search filter';
+		
+		$template = locate_template(
+			template_path() . "content-search.php",
+			false,
+			false
+		);
+		
+		return $template;
+	}
+	
+	return $template;
 }

@@ -8,9 +8,12 @@
 |
 */
 function wptw_do_loop() {
+	echo ' ## ' . get_post_type();
 	if ( is_singular()) {
+		echo ' ## singular';
 		wptw_single_loop();
 	} else {
+		echo ' ## not singular';
 		wptw_standard_loop();
 	}
 }
@@ -21,7 +24,8 @@ function wptw_standard_loop() {
 		
 		/**
 		 * hook: wptw_before_while_have_posts
-		 * @hooked : wptw_home_single_post_title 5
+		 * @hooked : wptw_home_single_post_title 10
+		 * @hooked: wptw_do_archive_page_title 20
 		 */
 		do_action( 'wptw_before_while_have_posts' );
 		
@@ -41,6 +45,8 @@ function wptw_standard_loop() {
 			 */
 			do_action( 'wptw_after_entry' );
 		}
+		
+		// TODO: pagination
 		
 		/**
 		 * hook: wptw_after_endwhile_have_posts

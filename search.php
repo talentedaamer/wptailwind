@@ -10,30 +10,35 @@
  |
  */
 
-/**
- * exit if accessed directly
- */
+# exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 get_header(); ?>
 
-<?php if ( have_posts() ) :
-	printf(
-		esc_html__( 'Results Filtered by: %s', 'wptailwind' ),
-		get_search_query()
-	);
-	
-	while ( have_posts() ) : the_post();
-		get_template_part( 'template-parts/content', 'search' );
-	endwhile;
-	
-	the_posts_navigation();
-else :
-	get_template_part( 'template-parts/content', 'none' );
-endif;
-?>
+    <div class="container px-4">
+        <div <?php wptw_content_sidebar_class(); ?>>
+            <div <?php wptw_content_class(); ?>>
+				<?php
+				/**
+				 * standard wordpress loop
+				 * @hooked: wptw_do_loop
+				 */
+				do_action( 'wptw_loop' );
+				?>
+            </div>
 
-<?php get_sidebar(); ?>
+            <div <?php wptw_sidebar_class(); ?>>
+				<?php
+				/**
+				 * standard wordpress sidebar
+				 * @hooked: wptw_do_sidebar
+				 */
+				do_action( 'wptw_sidebar' );
+				?>
+            </div>
+        </div>
+    </div>
+
 <?php get_footer(); ?>
