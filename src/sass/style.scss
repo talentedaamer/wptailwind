@@ -37,12 +37,10 @@
 }
 
 .wptw-btn {
-  @apply py-2;
-  @apply px-4;
-  @apply bg-gray-700;
-  @apply text-white;
+  @apply leading-none inline-block py-2 px-4;
+  @apply bg-gray-700 text-white;
   &:hover {
-    @apply bg-gray-800;
+    @apply bg-gray-800 text-white;
   }
   &:focus {
     @apply outline-none;
@@ -54,6 +52,10 @@
   &:hover {
     @apply bg-indigo-800;
   }
+}
+
+.wptw-btn-sm {
+  @apply inline-block py-1 px-2;
 }
 
 .wptw-svg-icon {
@@ -80,3 +82,35 @@
 .updated:not(.published) {
   @apply hidden;
 }
+
+.menu-item {
+  @apply px-2;
+  @apply relative;
+
+  .sub-menu,
+  .sub-menu .sub-menu {
+    @apply bg-gray-100 hidden absolute left-0;
+    @apply p-2;
+    @apply w-32;
+    top: 100%;
+    z-index: 100;
+
+    .sub-menu {
+      top: 0;
+      left: 100%;
+    }
+
+    & > li {
+      @apply py-2;
+    }
+  }
+
+  &.menu-item-has-children {
+    &:hover {
+      & > .sub-menu {
+        @apply block;
+      }
+    }
+  }
+}
+

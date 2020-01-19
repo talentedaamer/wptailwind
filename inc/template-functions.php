@@ -87,8 +87,8 @@ function wptw_do_archive_page_title() {
 function wptw_do_search_page_title() {
 	if ( is_search() ) {
 		printf(
-			'<div class="archive-page-header mb-8"><h1 class="archive-title">%1$s</h1></div>',
-			printf(
+			'<div class="archive-page-header mb-8"><h1 class="archive-title">%s</h1></div>',
+			sprintf(
 				__( 'Results Filtered by: %s', 'wptailwind' ),
 				get_search_query()
 			)
@@ -98,8 +98,6 @@ function wptw_do_search_page_title() {
 
 function wptw_get_search_template_part( $template ) {
 	if ( is_search() ) {
-		echo ' ## search filter';
-		
 		$template = locate_template(
 			template_path() . "content-search.php",
 			false,
@@ -111,3 +109,39 @@ function wptw_get_search_template_part( $template ) {
 	
 	return $template;
 }
+
+function wptw_comments_nav() {
+	if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : ?>
+        <ul id="comments-nav" class="comments-nav flex justify-between mb-4">
+			<?php
+			if ( get_previous_comments_link() ) {
+				printf(
+					'<li>%s</li>',
+					sprintf(
+						get_previous_comments_link( __( '%s Older Comments', 'wptailwind' ) ),
+						wptailwind_get_icon( 'arrow-left', 16 )
+					)
+				);
+			}
+			if ( get_next_comments_link() ) {
+				printf(
+					'<li>%s</li>',
+					sprintf(
+						get_next_comments_link( __( 'Newer Comments %s', 'wptailwind' ) ),
+						wptailwind_get_icon( 'arrow-right', 16 )
+					)
+				);
+			}
+			?>
+        </ul>
+	<?php
+	endif;
+}
+
+add_filter( 'previous_comments_link_attributes', function () {
+	return 'class="wptw-btn wptw-btn-sm"';
+} );
+
+add_filter( 'next_comments_link_attributes', function () {
+	return 'class="wptw-btn wptw-btn-sm"';
+} );

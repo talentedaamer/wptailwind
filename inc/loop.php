@@ -8,16 +8,12 @@
 |
 */
 function wptw_do_loop() {
-	echo ' ## ' . get_post_type();
-	if ( is_singular()) {
-		echo ' ## singular';
+	if ( is_singular() ) {
 		wptw_single_loop();
 	} else {
-		echo ' ## not singular';
 		wptw_standard_loop();
 	}
 }
-
 
 function wptw_standard_loop() {
 	if ( have_posts() ) {
