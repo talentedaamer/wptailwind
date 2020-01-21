@@ -30,7 +30,7 @@ if ( post_password_required() ) {
 
 <div id="comments" class="comments-wrap">
 	<?php if ( have_comments() ) : ?>
-        <h2 class="comments-title mb-4">
+        <h2 class="comments-title mb-8">
 			<?php
 			// TODO: manage zero comments also
 			$wptailwind_comment_count = get_comments_number();
@@ -49,7 +49,7 @@ if ( post_password_required() ) {
 			?>
         </h2>
 		
-		<?php wptw_comments_nav(); ?>
+		<?php //wptw_comments_nav(); ?>
 
         <div class="comment-list">
 			<?php
