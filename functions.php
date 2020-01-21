@@ -457,13 +457,39 @@ require WPTW_DIR_PATH . 'inc/layout-html-classes.php';
 add_filter( 'comment_class', function ( $classes ) {
 	
 	$new_classes = array(
-		'flex',
-		'border-b',
-		'border-gray-300',
-		'pb-8',
-		'mb-8',
+		// 'flex',
+		// 'border-b',
+		// 'border-gray-300',
+		// 'pb-8',
+		// 'mb-8',
 	);
 	
 	return $classes = array_merge( $classes, $new_classes );
 	
 } );
+
+// // return apply_filters( 'get_avatar', $avatar, $id_or_email, $args['size'], $args['default'], $args['alt'], $args );
+// add_filter( 'get_avatar', 'function_cb' );
+// function function_cb( $avatar, $id_or_email, $size, $default, $args ) {
+// 	// echo '<pre>';
+// 	// var_dump($args['class']);
+// 	// echo '</pre>';
+// 	echo '<pre>';
+// 	print_r($args);
+// 	echo '</pre>';
+//
+// 	// array('class' => 'w-10 h-10 rounded-full mr-4');
+//     return $avatar;
+// }
+
+function wptw_is_comment_by_post_author( $comment = null ) {
+	if ( is_object( $comment ) && $comment->user_id > 0 ) {
+		$user = get_userdata( $comment->user_id );
+		$post = get_post( $comment->comment_post_ID );
+		if ( ! empty( $user ) && ! empty( $post ) ) {
+			return $comment->user_id === $post->post_author;
+		}
+	}
+	
+	return false;
+}
