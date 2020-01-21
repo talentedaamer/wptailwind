@@ -51,14 +51,16 @@ if ( post_password_required() ) {
 		
 		<?php wptw_comments_nav(); ?>
 
-        <ol class="comment-list">
+        <div class="comment-list">
 			<?php
 			wp_list_comments( array(
-				'style'      => 'ol',
+				'walker' => new WPTW_Comment_Walker(),
+				'avatar_size' => 120,
+				'style' => 'div',
 				'short_ping' => true,
 			) );
 			?>
-        </ol>
+        </div>
 		
 		<?php wptw_comments_nav(); ?>
 		

@@ -138,6 +138,24 @@ function wptw_comments_nav() {
 	endif;
 }
 
+function wptw_posts_nav( $args) {
+	$previous_link = get_previous_post_link( '<div class="nav-previous">%link</div>' );
+	$next_link = get_next_post_link( '<div class="nav-next">%link</div>' );
+	
+	echo $previous_link . ' ' . $next_link;
+}
+
+add_filter( 'navigation_markup_template', function ( $template ) {
+	$template = '
+	<nav class="navigation" role="navigation" aria-label="%4$s">
+		<div class="nav-links flex justify-between mb-4">%3$s</div>
+	</nav>';
+	
+	$template = apply_filters( 'wptw_posts_nav_markup_template', $template );
+	
+	return $template;
+} );
+
 // add_filter( 'previous_comments_link_attributes', function () {
 // 	return 'class="wptw-btn wptw-btn-sm"';
 // } );
