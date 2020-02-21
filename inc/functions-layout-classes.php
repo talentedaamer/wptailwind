@@ -7,17 +7,55 @@
 
 # site header classes
 
-# site container classes
+/**
+ * display the classes for the main container element
+ *
+ * @param string|array $class one or more classes to add to the list
+ */
+function wptw_container_class( $class = '' ) {
+	# Separates classes with a single space
+	echo 'class="' . join( ' ', wptw_get_container_class( $class ) ) . '"';
+}
 
-# site content-sidebar-wrapper classes
-
-# content wrapper classes
-
-# content classes
-
-# sidebar wrapper classes
-
-# sidebar classes
+/**
+ * retrieves an array of the class names for the container
+ * these classes are based on tailwind css framework which makes container for columns
+ *
+ * @since 1.0.1
+ *
+ * @param string $class Space-separated string or array of class names to add to the class list.
+ *
+ * @return array array of class names.
+ */
+function wptw_get_container_class( $class = '' ) {
+	$classes = array();
+	
+	if ( $class ) {
+		if ( ! is_array( $class ) ) {
+			$class = preg_split( '#\s+#', $class );
+		}
+		$classes = array_map( 'esc_attr', $class );
+	} else {
+		// Ensure that we always coerce class to being an array.
+		$class = array();
+	}
+	
+	$classes[] = 'wptw-container';
+	$classes[] = 'container';
+	$classes[] = 'px-4';
+	
+	/**
+	 * filters the list of CSS class names for content sidebar wrap element
+	 *
+	 * @since 1.0.1
+	 *
+	 * @param string[] $classes An array of post class names.
+	 * @param string[] $class An array of additional class names added to the post.
+	 */
+	$classes = apply_filters( 'wptw_content_sidebar_class', $classes, $class );
+	
+	return array_unique( $classes );
+}
 
 /**
  * displays the classes for the content sidebar wrap element
@@ -175,4 +213,52 @@ function wptw_get_sidebar_class( $class = '' ) {
     $classes = apply_filters( 'wptw_sidebar_class', $classes, $class );
     
     return array_unique( $classes );
+}
+
+/**
+ * displays the classes for the footer element
+ *
+ * @param string|array $class one or more classes to add to the class list.
+ */
+function wptw_footer_class( $class = '' ) {
+	# Separates classes with a single space
+	echo 'class="' . join( ' ', wptw_get_footer_class( $class ) ) . '"';
+}
+
+/**
+ * retrieves an array of the class names for the footer container
+ * these classes are based on tailwind css framework which make layout
+ *
+ * @since 1.0.1
+ *
+ * @param string $class Space-separated string or array of class names to add to the class list.
+ *
+ * @return array array of class names.
+ */
+function wptw_get_footer_class( $class = '' ) {
+	$classes = array();
+	
+	if ( $class ) {
+		if ( ! is_array( $class ) ) {
+			$class = preg_split( '#\s+#', $class );
+		}
+		$classes = array_map( 'esc_attr', $class );
+	} else {
+		// Ensure that we always coerce class to being an array.
+		$class = array();
+	}
+	
+	$classes[] = 'footer-wrap';
+	
+	/**
+	 * filters the list of CSS class names for sidebar wrap element
+	 *
+	 * @since 1.0.1
+	 *
+	 * @param string[] $classes An array of post class names.
+	 * @param string[] $class An array of additional class names added to the post.
+	 */
+	$classes = apply_filters( 'wptw_sidebar_class', $classes, $class );
+	
+	return array_unique( $classes );
 }

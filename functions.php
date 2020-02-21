@@ -113,6 +113,28 @@ add_action( 'after_setup_theme', 'wptailwind_content_width', 0 );
 
 /*
  |-------------------------------------------------
+ | WPTailwind Logo
+ |-------------------------------------------------
+ |
+ | Display wptailwind logo
+ |
+ */
+if ( ! function_exists( 'wptw_logo' ) ) :
+    function wptw_logo() {
+        $logo = sprintf(
+            '<h1 class="font-bold text-2xl"><a href="%s">%s</a></h1>',
+	        esc_url( get_home_url( '/' ) ),
+	        wptw_icon('chevron-left', 32 ) . '<span>WpTailwind</span>' . wptw_icon('chevron-right', 32 )
+        );
+        
+        $logo = apply_filters( 'wptw_logo_markup', $logo );
+        
+        echo $logo;
+    }
+endif;
+
+/*
+ |-------------------------------------------------
  | Post meta posted_on
  |-------------------------------------------------
  |
@@ -295,28 +317,6 @@ if ( ! function_exists( 'wptailwind_post_thumbnail' ) ) :
 	}
 endif;
 
-/*
-|-------------------------------------------------
-| Widget areas
-|-------------------------------------------------
-|
-| Register widget areas/sidebars for the theme
-| sidebar-1 is main sidebar used on posts and pages
-|
-*/
-function wptailwind_widgets_init() {
-	register_sidebar( array(
-		'name'          => esc_html__( 'Sidebar Primary', 'wptailwind' ),
-		'id'            => 'sidebar-1',
-		'description'   => esc_html__( 'Primary sidebar for posts and pages.', 'wptailwind' ),
-		'before_widget' => '<section id="%1$s" class="mb-8 widget %2$s">',
-		'after_widget'  => '</section>',
-		'before_title'  => '<h4 class="widget-title text-gray-900 mb-4 uppercase">',
-		'after_title'   => '</h2>',
-	) );
-}
-
-add_action( 'widgets_init', 'wptailwind_widgets_init' );
 
 /*
 |-------------------------------------------------
@@ -336,7 +336,6 @@ function wptailwind_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
-
 add_action( 'wp_enqueue_scripts', 'wptailwind_scripts' );
 
 /*
@@ -349,20 +348,25 @@ add_action( 'wp_enqueue_scripts', 'wptailwind_scripts' );
 | @return string
 |
 */
-
-function wptailwind_get_search_form() {
-	return '<form role="search" method="get" class="flex search-form" action="' . esc_url( home_url( '/' ) ) . '" xmlns="http://www.w3.org/1999/html">
-        <input type="search" class="wptw-input w-full" placeholder="' . esc_attr_x( 'Search &hellip;', 'placeholder' ) . '" value="' . get_search_query() . '" name="s" />
-        <button type="submit" class="w-auto flex justify-end items-center wptw-btn">' . wptailwind_meta_icon( 'search', 18 ) . '</button>
-    </form>';
-}
-
+if ( ! function_exists('wptailwind_get_search_form') ) :
+	function wptailwind_get_search_form() {
+		return '<form role="search" method="get" class="flex search-form" action="' . esc_url( home_url( '/' ) ) . '" xmlns="http://www.w3.org/1999/html">
+            <input type="search" class="wptw-input w-full" placeholder="' . esc_attr_x( 'Search &hellip;', 'placeholder' ) . '" value="' . get_search_query() . '" name="s" />
+            <button type="submit" class="w-auto flex justify-end items-center wptw-btn">' . wptailwind_meta_icon( 'search', 18 ) . '</button>
+        </form>';
+	}
+endif;
 add_filter( 'get_search_form', 'wptailwind_get_search_form' );
 
+/*
+|-------------------------------------------------
+| Posts Pagination
+|-------------------------------------------------
+|
+| posts pagination
+|
+*/
 if ( ! function_exists( 'wptailwind_posts_pagination' ) ) :
-	/**
-	 * Documentation for function.
-	 */
 	function wptailwind_posts_pagination() {
 		the_posts_pagination(
 			array(
@@ -385,52 +389,42 @@ if ( ! function_exists( 'wptailwind_posts_pagination' ) ) :
 	}
 endif;
 
+/*
+|-------------------------------------------------
+| Body Classes
+|-------------------------------------------------
+|
+| conditional body classes
+|
+*/
 if ( ! function_exists( 'wptailwind_body_classes' ) ) {
 	function wptailwind_body_classes( $classes ) {
 		
-		// Adds a class of group-blog to blogs with more than 1 published author.
 		if ( is_multi_author() ) {
 			$classes[] = 'group-blog';
 		}
-		// Adds a class of hfeed to non-singular pages.
+		
 		if ( ! is_singular() ) {
 			$classes[] = 'hfeed';
 		}
 		
-		// get layout container type.
-		// $container_typ = get_theme_mod( 'bp_container_type' );
-		// Adds class of 'bp-boxed-layout' if boxed layout selected.
-		// if ( 'container' == $container_typ ) {
-		// 	$classes[] = 'bp-boxed-layout';
-		// }
+		# TODO: get layout width from customizer and add body class
 		
 		return $classes;
 	}
 }
 add_filter( 'body_class', 'wptailwind_body_classes' );
 
+/*
+|-------------------------------------------------
+| Post Classes
+|-------------------------------------------------
+|
+| conditional post classes
+|
+*/
 if ( ! function_exists( 'wptailwind_post_classes' ) ) {
 	function wptailwind_post_classes( $classes, $class, $post_id ) {
-		// if ( ! is_admin() ) { //make sure we are in the dashboard
-		// 	return $classes;
-		// }
-		// $screen = get_current_screen(); //verify which page we're on
-		// if ('my-custom-type' != $screen->post_type && 'edit' != $screen->base) {
-		// 	return $classes;
-		// }
-		// //check if some meta field is set
-		// $profile_incomplete = get_post_meta($post_id, 'profile_incomplete', true);
-		// if ('yes' == $profile_incomplete) {
-		// 	$classes[] = 'profile_incomplete'; //add a custom class to highlight this row in the table
-		// }
-		
-		// if ( is_sticky( $post_id ) ) {
-		//    $classes[] = 'bg-gray-200';
-		// }
-		
-		// $stickies = get_option( 'sticky_posts' );
-		// is_array( $stickies ) && in_array( $post_id, $stickies )
-		
 		if ( ! is_singular() && is_sticky() ) {
 			$classes[] = 'p-10 bg-gray-100 border-2 border-gray-300';
 		}
@@ -440,56 +434,51 @@ if ( ! function_exists( 'wptailwind_post_classes' ) ) {
 }
 add_filter( 'post_class', 'wptailwind_post_classes', 10, 3 );
 
-require WPTW_DIR_PATH . 'inc/functions-icons.php';
-require WPTW_DIR_PATH . 'inc/functions-header-image.php';
-require WPTW_DIR_PATH . 'inc/config/config.php';
-
-require WPTW_DIR_PATH . 'inc/loop.php';
-require WPTW_DIR_PATH . 'inc/add-action-hooks.php';
-require WPTW_DIR_PATH . 'inc/add-filter-hooks.php';
-require WPTW_DIR_PATH . 'inc/template-functions.php';
-require WPTW_DIR_PATH . 'inc/template-comments.php';
-
-require WPTW_DIR_PATH . 'inc/class-wptw-comment-walker.php';
-
-require WPTW_DIR_PATH . 'inc/layout-html-classes.php';
-
+/*
+|-------------------------------------------------
+| Comments Classes
+|-------------------------------------------------
+|
+| classes for post item.
+|
+*/
 add_filter( 'comment_class', function ( $classes ) {
 	
-	$new_classes = array(
-		// 'flex',
-		// 'border-b',
-		// 'border-gray-300',
-		// 'pb-8',
-		// 'mb-8',
-	);
+	$classes[] = 'flex border-b border-gray-300 pb-8 mb-8 w-100';
 	
-	return $classes = array_merge( $classes, $new_classes );
+	/**
+	 * filters the list of CSS class names for comments
+	 *
+	 * @since 1.0.1
+	 *
+	 * @param string[] $classes An array of comment class names.
+	 */
+	$classes = apply_filters( 'wptw_comment_class', $classes );
 	
+	return array_unique( $classes );
 } );
 
-// // return apply_filters( 'get_avatar', $avatar, $id_or_email, $args['size'], $args['default'], $args['alt'], $args );
-// add_filter( 'get_avatar', 'function_cb' );
-// function function_cb( $avatar, $id_or_email, $size, $default, $args ) {
-// 	// echo '<pre>';
-// 	// var_dump($args['class']);
-// 	// echo '</pre>';
-// 	echo '<pre>';
-// 	print_r($args);
-// 	echo '</pre>';
-//
-// 	// array('class' => 'w-10 h-10 rounded-full mr-4');
-//     return $avatar;
-// }
-
-function wptw_is_comment_by_post_author( $comment = null ) {
-	if ( is_object( $comment ) && $comment->user_id > 0 ) {
-		$user = get_userdata( $comment->user_id );
-		$post = get_post( $comment->comment_post_ID );
-		if ( ! empty( $user ) && ! empty( $post ) ) {
-			return $comment->user_id === $post->post_author;
-		}
-	}
-	
-	return false;
+/*
+|-------------------------------------------------
+| Include Functions, Filters, Classes
+|-------------------------------------------------
+|
+| Include theme core functionality
+|
+*/
+if ( defined( 'WPTW_DIR_PATH' ) ) {
+	define( 'WPTW_INC_DIR_PATH', trailingslashit( WPTW_DIR_PATH . 'inc' ) );
+} else {
+	define( 'WPTW_INC_DIR_PATH', trailingslashit( trailingslashit( get_template_directory() ) . 'inc' ) );
 }
+require WPTW_INC_DIR_PATH . 'config/config.php';
+require WPTW_INC_DIR_PATH . 'functions-loop.php';
+require WPTW_INC_DIR_PATH . 'functions-icons.php';
+require WPTW_INC_DIR_PATH . 'functions-sidebar.php';
+require WPTW_INC_DIR_PATH . 'functions-header-image.php';
+require WPTW_INC_DIR_PATH . 'functions-action-hooks.php';
+require WPTW_INC_DIR_PATH . 'functions-filter-hooks.php';
+require WPTW_INC_DIR_PATH . 'functions-templates.php';
+require WPTW_INC_DIR_PATH . 'functions-comments.php';
+require WPTW_INC_DIR_PATH . 'functions-layout-classes.php';
+require WPTW_INC_DIR_PATH . 'class-comments-walker.php';
