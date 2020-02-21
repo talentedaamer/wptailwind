@@ -58,6 +58,7 @@ if ( post_password_required() ) {
 				'avatar_size' => 120,
 				'style' => 'div',
 				'short_ping' => true,
+				'reply_text'  => wptw_icon('corner-down-right', 16) . __( 'Reply', 'twentyseventeen' ),
 			) );
 			?>
         </div>
