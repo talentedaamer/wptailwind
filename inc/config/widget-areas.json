@@ -1,0 +1,26 @@
+{
+  "sidebar-1": {
+      "name": "Sidebar Primary",
+      "description": "Main primary sidebar for Posts & Pages."
+  },
+  "sidebar-2": {
+    "name": "Sidebar Secondary",
+    "description": "Main secondary sidebar for Posts & Pages."
+  },
+  "footer-1": {
+    "name": "Footer 1",
+    "description": "Footer Widget area for first column."
+  },
+  "footer-2": {
+    "name": "Footer 2",
+    "description": "Footer Widget area for second column."
+  },
+  "footer-3": {
+    "name": "Footer 3",
+    "description": "Footer Widget area for third column."
+  },
+  "footer-4": {
+    "name": "Footer 4",
+    "description": "Footer Widget area for fourth column."
+  }
+}
