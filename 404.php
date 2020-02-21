@@ -19,14 +19,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header(); ?>
 
-<?php
-esc_html_e( 'Sorry Page could not be found.', 'wptailwind' );
-
-esc_html_e( 'The page is removed or URL changes. Please search by keyword.', 'wptailwind' );
-
-get_search_form();
-
-// TODO: add widget area for recent posts, archives, tags etc
-?>
+<div <?php wptw_container_class(); ?>>
+	<?php
+	esc_html_e( 'Sorry Page could not be found.', 'wptailwind' );
+	
+	esc_html_e( 'The page is removed or URL changes. Please search by keyword.', 'wptailwind' );
+	
+	get_search_form();
+	?>
+</div>
 
 <?php get_footer(); ?>

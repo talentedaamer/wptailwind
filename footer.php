@@ -52,33 +52,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 		'phone',
 		'search',
 		'tag',
-		'user',
+		'user'
 	);
-	foreach ( $icons as $icon ) {
-		?>
-        <span class="p-2 mx-1 bg-secondary-700 text-white inline-block mb-2 leading-none">
-            <?php echo wptailwind_meta_icon( $icon, '20' ); ?>
-        </span>
-		<?php
+	foreach ( $icons as $icon ) { ?>
+    <span class="p-2 mx-1 bg-secondary-700 text-white inline-block mb-2 leading-none">
+        <?php echo wptailwind_meta_icon( $icon, '20' ); ?>
+    </span>
+    <?php
 	}
 	?>
 </div>
 </div>
 
-<footer id="colophon" class="site-footer">
-    <div class="container px-4">
-        <p class="py-4 text-gray-700 text-sm text-center">
-			<?php
-			printf(
-				esc_html__( 'Proudly powered by %s', 'wptailwind' ),
-				'WordPress'
-			);
-			?>
-        </p>
+<?php do_action( 'wptw_before_footer' ); ?>
+<footer <?php wptw_footer_class(); ?>>
+    <div <?php wptw_container_class(); ?>>
+	    <?php
+	    /**
+	     * standard footer copyright text
+	     * @hooked: wptw_do_footer
+	     */
+	    do_action( 'wptw_footer_credits' );
+	    ?>
     </div>
 </footer>
+<?php do_action( 'wptw_after_footer' ); ?>
 
 <?php wp_footer(); ?>
-<?php do_action( 'wptw_after_footer' ); ?>
 </body>
 </html>

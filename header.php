@@ -31,20 +31,19 @@ if ( ! defined( 'ABSPATH' ) ) {
     <?php do_action( 'wptw_after_head' ); ?>
 </head>
 <body <?php body_class( 'font-sans font-light text-base leading-relaxed' ); ?>>
-<?php do_action( 'wptw_before_header' ); ?>
+
+<?php
+/**
+ * before header element hook
+ */
+do_action( 'wptw_before_header' ); ?>
 
 <!--wptw-header-->
-<header id="wptw-header" class="wptw-header w-full bg-white shadow mb-16">
-    <div class="container w-full mx-auto flex flex-wrap items-center justify-between py-4">
+<header id="wptw-header" class="wptw-header w-full bg-white shadow mb-16 py-4">
+    <div class="container w-full mx-auto flex flex-wrap items-center justify-between px-4">
         <!--wptw-logo-wrap-->
         <div class="wptw-logo-wrap">
-            <h1 class="font-bold">
-                <a class="text-gray-900" href="#">
-                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-				        <?php bloginfo( 'name' ); ?>
-                    </a>
-                </a>
-            </h1>
+	        <?php wptw_logo(); ?>
 	        <?php
 	        $wptw_desc = get_bloginfo( 'description', 'display' );
 	        if ( $wptw_desc || is_customize_preview() ) : ?>
@@ -69,8 +68,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	        wp_nav_menu( [
 		        'theme_location' => 'menu-1',
 		        'container' => false,
-		        'menu_id'        => 'primary-menu',
-		        'menu_class'     => 'list-reset lg:flex justify-end flex-1 items-center',
+		        'menu_id' => 'primary-menu',
+		        'menu_class' => 'list-reset lg:flex justify-end flex-1 items-center',
 	        ] );
 	        ?>
         </div>
@@ -90,5 +89,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!--end:wptw-header-->
 
 <?php
+/**
+ * after header element hook
+ */
 do_action( 'wptw_after_header' );
 ?>
