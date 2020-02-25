@@ -36,6 +36,7 @@ a:not([href]):not([tabindex]) {
   }
 }
 
+.comment-meta,
 .post-meta-header,
 .post-meta-footer {
   a {
@@ -54,3 +55,4 @@ a:not([href]):not([tabindex]) {
 @tailwind utilities;
 
 @import "headings";
+@import "comments";
