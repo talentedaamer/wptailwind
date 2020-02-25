@@ -444,7 +444,7 @@ add_filter( 'post_class', 'wptailwind_post_classes', 10, 3 );
 */
 add_filter( 'comment_class', function ( $classes ) {
 	
-	$classes[] = 'flex border-b border-gray-300 pb-8 mb-8 w-100';
+	// $classes[] = '';
 	
 	/**
 	 * filters the list of CSS class names for comments

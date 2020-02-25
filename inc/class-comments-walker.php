@@ -14,14 +14,9 @@ if ( ! class_exists( 'WPTW_Comment_Walker' ) ) {
 					'class' => 'w-12 h-12 rounded-full border border-gray-300',
 				)
 			);
-			$comment_timestamp  = sprintf(
-				__( '%1$s at %2$s', 'wptailwind' ),
-				get_comment_date( '', $comment ),
-				get_comment_time()
-			);
 			?>
-            <<?php echo $tag; ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $this->has_children ? 'parent pl-8' : '', $comment ); ?>>
-            <article id="div-comment-<?php comment_ID(); ?>" class="comment-body w-full">
+            <<?php echo $tag; ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $this->has_children ? 'parent' : '', $comment ); ?>>
+            <article id="div-comment-<?php comment_ID(); ?>" class="comment-body w-full border-b border-gray-300 pb-8 mb-8">
                 <header class="comment-meta mb-4">
                     <div class="comment-author vcard flex mb-4">
 						<?php if ( 0 !== $args[ 'avatar_size' ] ) { ?>
@@ -37,17 +32,10 @@ if ( ! class_exists( 'WPTW_Comment_Walker' ) ) {
 								);
 							}
 							?>
-                            <div class="comment-date text-sm">
-                                <a href="<?php echo esc_url( get_comment_link( $comment, $args ) ); ?>">
-                                    <time datetime="<?php comment_time( 'c' ); ?>"
-                                          title="<?php echo esc_attr( $comment_timestamp ); ?>">
-										<?php echo esc_html( $comment_timestamp ); ?>
-                                    </time>
-                                </a>
-								<?php
-								if ( get_edit_comment_link() ) {
-									echo '<a class="comment-edit-link" href="' . esc_url( get_edit_comment_link() ) . '">' . __( 'Edit', 'wptailwind' ) . '</a>';
-								}
+                            <div class="comment-meta text-sm">
+                                <?php
+                                wptw_comment_posted_on( $comment, $args );
+                                wptw_comment_edit_link();
 								?>
                             </div>
                         </div>

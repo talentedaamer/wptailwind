@@ -634,17 +634,20 @@ a:not([href]):not([tabindex]):focus {
   outline: 0;
 }
 
+.comment-meta a,
 .post-meta-header a,
 .post-meta-footer a {
   color: #718096;
 }
 
+.comment-meta a:hover,
 .post-meta-header a:hover,
 .post-meta-footer a:hover {
   color: #2d3748;
   text-decoration: none;
 }
 
+.comment-meta .wptw-svg-icon > svg,
 .post-meta-header .wptw-svg-icon > svg,
 .post-meta-footer .wptw-svg-icon > svg {
   color: #718096;
@@ -10793,6 +10796,10 @@ h3 {
 
 h4 {
   font-size: 1.125rem;
+}
+
+.comments-wrap .parent .comment {
+  margin-left: 2rem;
 }
 
 @media (min-width: 640px) {
