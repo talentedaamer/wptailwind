@@ -41,8 +41,6 @@ function wptw_get_container_class( $class = '' ) {
 	}
 	
 	$classes[] = 'wptw-container';
-	$classes[] = 'container';
-	$classes[] = 'px-4';
 	
 	/**
 	 * filters the list of CSS class names for content sidebar wrap element
@@ -213,6 +211,54 @@ function wptw_get_sidebar_class( $class = '' ) {
     $classes = apply_filters( 'wptw_sidebar_class', $classes, $class );
     
     return array_unique( $classes );
+}
+
+/**
+ * display the classes for the comments wrap element
+ *
+ * @param string|array $class one or more classes to add to the list
+ */
+function wptw_comments_class( $class = '' ) {
+	# Separates classes with a single space
+	echo 'class="' . join( ' ', wptw_get_comments_class( $class ) ) . '"';
+}
+
+/**
+ * retrieves an array of the class names for the comments wrap
+ * these classes are based on tailwind css framework which makes container for columns
+ *
+ * @since 1.0.1
+ *
+ * @param string $class Space-separated string or array of class names to add to the class list.
+ *
+ * @return array array of class names.
+ */
+function wptw_get_comments_class( $class = '' ) {
+	$classes = array();
+	
+	if ( $class ) {
+		if ( ! is_array( $class ) ) {
+			$class = preg_split( '#\s+#', $class );
+		}
+		$classes = array_map( 'esc_attr', $class );
+	} else {
+		// Ensure that we always coerce class to being an array.
+		$class = array();
+	}
+	
+	$classes[] = 'wptw-comments-wrap';
+	
+	/**
+	 * filters the list of CSS class names for content sidebar wrap element
+	 *
+	 * @since 1.0.1
+	 *
+	 * @param string[] $classes An array of post class names.
+	 * @param string[] $class An array of additional class names added to the post.
+	 */
+	$classes = apply_filters( 'wptw_content_sidebar_class', $classes, $class );
+	
+	return array_unique( $classes );
 }
 
 /**

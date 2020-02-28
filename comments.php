@@ -12,9 +12,7 @@
  |
  */
 
-/**
- * exit if accessed directly
- */
+# exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -28,11 +26,10 @@ if ( post_password_required() ) {
 }
 ?>
 
-<div id="comments" class="comments-wrap">
+<div id="comments" <?php wptw_container_class( 'mt-16' ); ?>>
 	<?php if ( have_comments() ) : ?>
         <h2 class="comments-title mb-8">
 			<?php
-			// TODO: manage zero comments also
 			$wptailwind_comment_count = get_comments_number();
 			if ( '1' === $wptailwind_comment_count ) {
 				printf(
@@ -48,35 +45,34 @@ if ( post_password_required() ) {
 			}
 			?>
         </h2>
-		
-		<?php //wptw_comments_nav(); ?>
-
         <div class="comment-list">
 			<?php
 			wp_list_comments( array(
-				'walker' => new WPTW_Comment_Walker(),
+				'walker' => new wptw_comment_walker(),
 				'avatar_size' => 120,
 				'style' => 'div',
 				'short_ping' => true,
-				'reply_text'  => wptw_icon('corner-down-right', 16) . __( ' Reply', 'wptailwind' ),
+				'reply_text'  => wptw_get_icon('corner-down-right', 16) . __( ' Reply', 'wptailwind' ),
 			) );
 			?>
         </div>
 		
-		<?php wptw_comments_nav(); ?>
-		
 		<?php
+        # comments nav
+        wptw_comments_nav();
+    
+        # comments closed notice
 		if ( ! comments_open() && '0' != get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :
 			?>
-            <p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'wptailwind' ); ?></p>
-		<?php
+            <p class="no-comments bg-yellow-200 border-yellow-300 border-2 py-2 px-4">
+                <?php esc_html_e( 'Comments are closed.', 'wptailwind' ); ?>
+            </p>
+		    <?php
 		endif;
 	
 	endif;
 	
-	/**
-	 * comments form fields are overwritten by filters
-	 */
+	# comments form fields are overwritten by filters
 	comment_form();
 	?>
 </div>
