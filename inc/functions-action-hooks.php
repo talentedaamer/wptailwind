@@ -32,3 +32,29 @@ function wptw_do_footer_credits() {
 	
 	echo $credits;
 }
+
+
+/*
+|-------------------------------------------------
+| Not Found Page Content
+|-------------------------------------------------
+|
+| Inner content of 404 page. filterable via filters
+|
+*/
+add_action( 'wptw_not_found_content', 'wptw_not_found_do_content' );
+function wptw_not_found_do_content() {
+	$page_title = apply_filters( 'wptw_not_found_do_content_title', __( '404 Not Found', 'wptailwind' ) );
+	$page_subtitle = apply_filters( 'wptw_not_found_do_content_subtitle', __( 'Sorry Page could not be found.', 'wptailwind' ) );
+	$content = sprintf(
+		'<h1 class="entry-title">%s</h1><p>%s</p>',
+ 		$page_title,
+		$page_subtitle
+	);
+	
+	$content = apply_filters( 'wptw_not_found_do_content', $content );
+	
+	echo $content;
+}
+
+// get_search_form();
