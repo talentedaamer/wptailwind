@@ -18,7 +18,7 @@ if ( !defined( 'ABSPATH' ) ) {
 # get header.php
 get_header(); ?>
 
-<div <?php wptw_container_class(); ?>>
+<div <?php wptw_container_class( 'container px-4' ); ?>>
     <div <?php wptw_content_sidebar_class(); ?>>
         <div <?php wptw_content_class(); ?>>
             <?php

@@ -11,9 +11,7 @@
  |
  */
 
-/**
- * exit if accessed directly
- */
+# exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
