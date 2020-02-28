@@ -11,9 +11,7 @@
  |
  */
 
-/**
- * exit if accessed directly
- */
+# exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -117,7 +115,7 @@ if ( ! function_exists( 'wptw_comment_edit_link' ) ) :
 		
 		printf(
 			'<span class="comment-edit-link wptw-svg-icon ml-2">%1$s<a class="comment-edit-link font-serif ml-1" href="%2$s">%3$s</a></span>',
-			wptailwind_meta_icon( 'edit' ),
+			wptw_meta_icon( 'edit' ),
 			esc_url( get_edit_comment_link() ),
 			__( 'Edit', 'wptailwind' )
 		);
@@ -149,7 +147,7 @@ if ( ! function_exists( 'wptw_comment_posted_on' ) ) :
 		
 		printf(
 			'<span class="comment-posted-on wptw-svg-icon">%1$s<a class="font-serif ml-1" href="%2$s" rel="bookmark">%3$s</a></span>',
-			wptailwind_meta_icon( 'clock' ),
+			wptw_meta_icon( 'clock' ),
 			esc_url( get_comment_link( $comment, $args ) ),
 			$time_string
 		);

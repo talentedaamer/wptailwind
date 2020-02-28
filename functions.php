@@ -11,29 +11,32 @@
  |
  */
 
-/**
- * exit if accessed directly
- */
+# exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// TODO: Remove dev env after completion
-define( 'WPTW_ENV', 'development' );
-
-/**
- * Theme constants
+/*
+ |-------------------------------------------------
+ | Theme Constants
+ |-------------------------------------------------
+ |
+ | Theme constant variables like version, theme dir,
+ | theme dir uri, template-parts directory path.
+ |
+ | WPTW_TEMPLATE_VIEWS_PATH
+ | usage: if child theme or customize this theme
+ | user can give own template directory path
+ | without overwriting the main template files
+ |
  */
 define( 'WPTAILWIND_VERSION', '1.0.0' );
-
-/**
- * usage: if child theme or customize theme can give own template directory path
- */
 define( 'WPTW_TEMPLATE_VIEWS_PATH', trailingslashit( 'template-parts' ) );
-
+# theme directory path
 if ( ! defined( 'WPTW_DIR_PATH' ) ) {
 	define( 'WPTW_DIR_PATH', trailingslashit( get_template_directory() ) );
 }
+# theme direcoty uri (for css, js, images etc)
 if ( ! defined( 'WPTW_DIR_URI' ) ) {
 	define( 'WPTW_DIR_URI', trailingslashit( get_template_directory_uri() ) );
 }
@@ -47,39 +50,30 @@ if ( ! defined( 'WPTW_DIR_URI' ) ) {
  | various WordPress features.
  |
  */
-if ( ! function_exists( 'wptailwind_setup' ) ) :
-	function wptailwind_setup() {
-		/*
-		 * Make theme translation ready.
-		 */
+if ( ! function_exists( 'wptw_setup' ) ) :
+	function wptw_setup() {
+		# Make the theme translation ready.
 		load_theme_textdomain( 'wptailwind', get_template_directory() . '/langs' );
 		
-		/**
-		 * add theme support for posts and comments RSS feed links.
-		 */
+		# add theme support for posts and comments RSS feed links.
 		add_theme_support( 'automatic-feed-links' );
 		
-		/*
-		 * Add theme support for document title.
-		 */
+		# Add theme support for document title.
 		add_theme_support( 'title-tag' );
 		
-		/*
-		 * Add theme support for post thumbnails
-		 */
+		# Add theme support for post thumbnails
 		add_theme_support( 'post-thumbnails' );
 		
-		/**
-		 * Add theme support for navigation menus
-		 */
-		register_nav_menus( [
+		# add theme support for custom headers
+		add_theme_support( 'custom-header', array( 'uploads' => true ) );
+		
+		# Add theme support for navigation menus
+		register_nav_menus( array(
 			'menu-1' => esc_html__( 'Primary Menu', 'wptailwind' ),
 			'menu-2' => esc_html__( 'Secondary Menu', 'wptailwind' ),
-		] );
+        ) );
 		
-		/**
-		 * Add html5 tag support for comments, search, gallery, captions etc
-		 */
+		# Add html5 tag support for comments, search, gallery, captions etc
 		add_theme_support( 'html5', [
 			'search-form',
 			'comment-form',
@@ -88,13 +82,11 @@ if ( ! function_exists( 'wptailwind_setup' ) ) :
 			'caption',
 		] );
 		
-		/**
-		 * Add theme support for selective refresh for widgets.
-		 */
+		# Add theme support for selective refresh for widgets.
 		add_theme_support( 'customize-selective-refresh-widgets' );
 	}
 endif;
-add_action( 'after_setup_theme', 'wptailwind_setup' );
+add_action( 'after_setup_theme', 'wptw_setup' );
 
 /*
  |-------------------------------------------------
@@ -120,17 +112,17 @@ add_action( 'after_setup_theme', 'wptailwind_content_width', 0 );
  |
  */
 if ( ! function_exists( 'wptw_logo' ) ) :
-    function wptw_logo() {
-        $logo = sprintf(
-            '<h1 class="font-bold text-2xl"><a href="%s">%s</a></h1>',
-	        esc_url( get_home_url( '/' ) ),
-	        wptw_icon('chevron-left', 32 ) . '<span>WpTailwind</span>' . wptw_icon('chevron-right', 32 )
-        );
-        
-        $logo = apply_filters( 'wptw_logo_markup', $logo );
-        
-        echo $logo;
-    }
+	function wptw_logo() {
+		$logo = sprintf(
+			'<h1 class="font-bold text-2xl"><a href="%s">%s</a></h1>',
+			esc_url( get_home_url( '/' ) ),
+			wptw_get_icon( 'chevron-left', 32 ) . '<span>WpTailwind</span>' . wptw_get_icon( 'chevron-right', 32 )
+		);
+		
+		$logo = apply_filters( 'wptw_logo_markup', $logo );
+		
+		echo $logo;
+	}
 endif;
 
 /*
@@ -159,7 +151,7 @@ if ( ! function_exists( 'wptailwind_posted_on' ) ) :
 		
 		printf(
 			'<span class="posted-on wptw-svg-icon">%1$s<a class="font-serif ml-1" href="%2$s" rel="bookmark">%3$s</a></span>',
-			wptailwind_meta_icon( 'clock' ),
+			wptw_meta_icon( 'clock' ),
 			esc_url( get_permalink() ),
 			$time_string
 		);
@@ -181,7 +173,7 @@ if ( ! function_exists( 'wptailwind_posted_by' ) ) :
 	 */
 	function wptailwind_posted_by() {
 		$byline = '<a class="font-serif ml-1" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a>';
-		echo '<span class="posted-by wptw-svg-icon ml-4"> ' . wptailwind_meta_icon( 'user' ) . $byline . '</span>'; // WPCS: XSS OK
+		echo '<span class="posted-by wptw-svg-icon ml-4"> ' . wptw_meta_icon( 'user' ) . $byline . '</span>'; // WPCS: XSS OK
 	}
 endif;
 
@@ -198,7 +190,7 @@ if ( ! function_exists( 'wptailwind_comment_link' ) ) :
 	function wptailwind_comment_link() {
 		if ( ! is_single() && ! post_password_required() && ( comments_open() || get_comments_number() ) ) : ?>
             <span class="comments-link wptw-svg-icon ml-4">
-                <?php echo wptailwind_meta_icon( 'message-circle' ); ?>
+                <?php echo wptw_meta_icon( 'message-circle' ); ?>
                 <?php comments_popup_link( false, false, false, 'font-serif ml-1', false ); ?>
             </span>
 		<?php endif;
@@ -222,7 +214,7 @@ if ( ! function_exists( 'wptailwind_entry_footer' ) ) :
 			if ( $categories_list ) {
 				printf(
 					'<span class="cat-links wptw-svg-icon">%1$s<span class="font-serif ml-1">%2$s</span></span>',
-					wptailwind_meta_icon( 'folder' ),
+					wptw_meta_icon( 'folder' ),
 					$categories_list
 				);
 			}
@@ -233,7 +225,7 @@ if ( ! function_exists( 'wptailwind_entry_footer' ) ) :
 				/* translators: 1: list of tags. */
 				printf(
 					'<span class="tags-links wptw-svg-icon ml-4">%1$s<span class="font-serif ml-1">%2$s</span></span>',
-					wptailwind_meta_icon( 'hash' ),
+					wptw_meta_icon( 'hash' ),
 					$tags_list
 				);
 			}
@@ -247,7 +239,7 @@ if ( ! function_exists( 'wptailwind_entry_footer' ) ) :
 				),
 				get_the_title()
 			),
-			'<span class="edit-link wptw-svg-icon ml-4">' . wptailwind_meta_icon( 'edit' ),
+			'<span class="edit-link wptw-svg-icon ml-4">' . wptw_meta_icon( 'edit' ),
 			'</span>',
 			null,
 			'ml-1'
@@ -317,7 +309,6 @@ if ( ! function_exists( 'wptailwind_post_thumbnail' ) ) :
 	}
 endif;
 
-
 /*
 |-------------------------------------------------
 | Scripts & Styles
@@ -336,6 +327,7 @@ function wptailwind_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
+
 add_action( 'wp_enqueue_scripts', 'wptailwind_scripts' );
 
 /*
@@ -348,11 +340,11 @@ add_action( 'wp_enqueue_scripts', 'wptailwind_scripts' );
 | @return string
 |
 */
-if ( ! function_exists('wptailwind_get_search_form') ) :
+if ( ! function_exists( 'wptailwind_get_search_form' ) ) :
 	function wptailwind_get_search_form() {
 		return '<form role="search" method="get" class="flex search-form" action="' . esc_url( home_url( '/' ) ) . '" xmlns="http://www.w3.org/1999/html">
             <input type="search" class="wptw-input w-full" placeholder="' . esc_attr_x( 'Search &hellip;', 'placeholder' ) . '" value="' . get_search_query() . '" name="s" />
-            <button type="submit" class="w-auto flex justify-end items-center wptw-btn">' . wptailwind_meta_icon( 'search', 18 ) . '</button>
+            <button type="submit" class="w-auto flex justify-end items-center wptw-btn">' . wptw_meta_icon( 'search', 18 ) . '</button>
         </form>';
 	}
 endif;
@@ -376,13 +368,13 @@ if ( ! function_exists( 'wptailwind_posts_pagination' ) ) :
 				'after_page_number'  => '</span>',
 				'prev_text'          => sprintf(
 					'%s <span class="nav-prev-text">%s</span>',
-					wptailwind_get_icon( 'chevron-left' ),
+					wptw_get_icon( 'chevron-left' ),
 					__( 'Newer posts', 'wptailwind' )
 				),
 				'next_text'          => sprintf(
 					'<span class="nav-next-text">%s</span> %s',
 					__( 'Older posts', 'wptailwind' ),
-					wptailwind_get_icon( 'chevron-right' )
+					wptw_get_icon( 'chevron-right' )
 				),
 			)
 		);

@@ -119,7 +119,7 @@ function wptw_comments_nav() {
 					'<li>%s</li>',
 					sprintf(
 						get_previous_comments_link( __( '%s Older Comments', 'wptailwind' ) ),
-						wptailwind_get_icon( 'arrow-left', 16 )
+						wptw_get_icon( 'arrow-left', 16 )
 					)
 				);
 			}
@@ -128,7 +128,7 @@ function wptw_comments_nav() {
 					'<li>%s</li>',
 					sprintf(
 						get_next_comments_link( __( 'Newer Comments %s', 'wptailwind' ) ),
-						wptailwind_get_icon( 'arrow-right', 16 )
+						wptw_get_icon( 'arrow-right', 16 )
 					)
 				);
 			}

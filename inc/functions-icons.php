@@ -13,9 +13,7 @@
  |
  */
 
-/**
- * exit if accessed directly
- */
+# exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -34,7 +32,7 @@ function wptailwind_load_icons() {
 
 add_action( 'wp_footer', 'wptailwind_load_icons', 9999 );
 
-function wptailwind_get_svg( $args = [] ) {
+function wptw_get_svg( $args = [] ) {
 	// Make sure $args are an array.
 	if ( empty( $args ) ) {
 		return __( 'Please define default parameters in the form of an array.', 'wptailwind' );
@@ -98,22 +96,16 @@ function wptailwind_get_svg( $args = [] ) {
 	return $svg;
 }
 
-function wptailwind_meta_icon( $icon, $size = 16 ) {
-	return wptailwind_get_svg( [
+
+function wptw_meta_icon( $icon, $size = 16 ) {
+	return wptw_get_svg( [
 		'icon' => $icon,
 		'size' => $size
 	] );
 }
 
-function wptw_icon( $icon, $size = 20 ) {
-	return wptailwind_get_svg( [
-		'icon' => $icon,
-		'size' => $size
-	] );
-}
-
-function wptailwind_get_icon( $icon, $size = 24 ) {
-	return wptailwind_get_svg( [
+function wptw_get_icon( $icon, $size = 24 ) {
+	return wptw_get_svg( [
 		'icon' => $icon,
 		'size' => $size
 	] );
