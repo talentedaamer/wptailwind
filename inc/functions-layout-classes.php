@@ -5,7 +5,53 @@
 
 # site body classes
 
-# site header classes
+/**
+ * displays the classes for the header element
+ *
+ * @param string|array $class one or more classes to add to the class list.
+ */
+function wptw_header_class( $class = '' ) {
+	# Separates classes with a single space
+	echo 'class="' . join( ' ', wptw_get_header_class( $class ) ) . '"';
+}
+
+/**
+ * retrieves an array of the class names for the main header
+ * these classes are based on tailwind css framework which make layout
+ *
+ * @since 1.0.1
+ *
+ * @param string $class Space-separated string or array of class names to add to the class list.
+ *
+ * @return array array of class names.
+ */
+function wptw_get_header_class( $class = '' ) {
+	$classes = array();
+	
+	if ( $class ) {
+		if ( ! is_array( $class ) ) {
+			$class = preg_split( '#\s+#', $class );
+		}
+		$classes = array_map( 'esc_attr', $class );
+	} else {
+		// Ensure that we always coerce class to being an array.
+		$class = array();
+	}
+	
+	$classes[] = 'wptw-header-wrap';
+	
+	/**
+	 * filters the list of CSS class names for sidebar wrap element
+	 *
+	 * @since 1.0.1
+	 *
+	 * @param string[] $classes An array of post class names.
+	 * @param string[] $class An array of additional class names added to the post.
+	 */
+	$classes = apply_filters( 'wptw_header_class', $classes, $class );
+	
+	return array_unique( $classes );
+}
 
 /**
  * display the classes for the main container element
@@ -50,7 +96,7 @@ function wptw_get_container_class( $class = '' ) {
 	 * @param string[] $classes An array of post class names.
 	 * @param string[] $class An array of additional class names added to the post.
 	 */
-	$classes = apply_filters( 'wptw_content_sidebar_class', $classes, $class );
+	$classes = apply_filters( 'wptw_container_class', $classes, $class );
 	
 	return array_unique( $classes );
 }
@@ -256,7 +302,7 @@ function wptw_get_comments_class( $class = '' ) {
 	 * @param string[] $classes An array of post class names.
 	 * @param string[] $class An array of additional class names added to the post.
 	 */
-	$classes = apply_filters( 'wptw_content_sidebar_class', $classes, $class );
+	$classes = apply_filters( 'wptw_comments_class', $classes, $class );
 	
 	return array_unique( $classes );
 }
@@ -304,7 +350,7 @@ function wptw_get_footer_class( $class = '' ) {
 	 * @param string[] $classes An array of post class names.
 	 * @param string[] $class An array of additional class names added to the post.
 	 */
-	$classes = apply_filters( 'wptw_sidebar_class', $classes, $class );
+	$classes = apply_filters( 'wptw_footer_class', $classes, $class );
 	
 	return array_unique( $classes );
 }

@@ -28,15 +28,15 @@ if ( ! defined( 'ABSPATH' ) ) {
         ?>
         <div class="post-meta-header mb-4">
             <?php
-            wptailwind_posted_on();
-            wptailwind_posted_by();
-            wptailwind_comment_link();
+            wptw_posted_on();
+            wptw_posted_by();
+            wptw_comment_link();
             ?>
         </div>
         <?php
 	endif;
 	
-	wptailwind_post_thumbnail();
+	wptw_post_thumbnail();
 	
     the_content( sprintf(
         wp_kses(
@@ -50,6 +50,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	
 	?>
 	<div class="post-meta-footer mt-4">
-        <?php wptailwind_entry_footer(); ?>
+        <?php wptw_entry_footer(); ?>
     </div>
 </article>

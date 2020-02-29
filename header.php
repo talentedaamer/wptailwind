@@ -37,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 do_action( 'wptw_before_header' ); ?>
 
 <!--wptw-header-->
-<header id="wptw-header" class="wptw-header w-full bg-white shadow mb-16 py-4">
+<header id="wptw-header" <?php wptw_header_class('w-full bg-white shadow py-4'); ?>>
     <div class="container w-full mx-auto flex flex-wrap items-center justify-between px-4">
         <!--wptw-logo-wrap-->
         <div class="wptw-logo-wrap">
@@ -73,22 +73,13 @@ do_action( 'wptw_before_header' ); ?>
         </div>
         <!--end:wptw-primary-menu-wrap-->
     </div>
-
-    <!--wptw-header-image-->
-	<?php
-	// the_custom_header_markup();
-	$header_image = get_header_image();
-	if ( $header_image ) {
-		echo '<div class="wptw-header-image bg-fixed bg-no-repeat bg-cover bg-center" style="background-image: url('.$header_image.'); height: 380px;"></div>';
-	}
-	?>
-    <!--end:wptw-header-image-->
 </header>
 <!--end:wptw-header-->
 
 <?php
 /**
  * after header element hook
+ * @hooked: wptw_custom_header_image
  */
 do_action( 'wptw_after_header' );
 ?>

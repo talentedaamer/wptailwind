@@ -16,28 +16,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class('mb-16'); ?>>
-	<?php
-	the_title( '<h1 class="entry-title">', '</h1>' );
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'mb-16' ); ?>>
 	
-	?>
-    <div class="post-meta-header mb-4">
-        <?php
-        wptailwind_posted_on();
-        wptailwind_posted_by();
-        wptailwind_comment_link();
-        ?>
-    </div>
-    <?php
+    <?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
     
-	wptailwind_post_thumbnail();
-	
-	the_content();
-	
-	wp_link_pages();
-	
-	?>
-    <div class="post-meta-footer mt-4">
-	    <?php wptailwind_page_footer(); ?>
+    <div class="post-meta-header mb-4">
+		<?php
+		wptw_posted_on();
+		wptw_posted_by();
+		wptw_comment_link();
+		?>
     </div>
+	
+    <?php wptw_post_thumbnail(); ?>
+    
+    <?php the_content(); ?>
+    
+	<?php wp_link_pages(); ?>
+	
+    <div class="post-meta-footer mt-4">
+		<?php wptw_page_footer(); ?>
+    </div>
+    
 </article>
