@@ -98,7 +98,7 @@ add_action( 'after_setup_theme', 'wptw_setup' );
  */
 if ( ! function_exists( 'wptailwind_content_width' ) ) :
 	function wptailwind_content_width() {
-		$GLOBALS[ 'content_width' ] = apply_filters( 'wptailwind_content_width', 640 );
+		$GLOBALS[ 'content_width' ] = apply_filters( 'wptailwind_content_width', 845 );
 	}
 endif;
 add_action( 'after_setup_theme', 'wptailwind_content_width', 0 );
