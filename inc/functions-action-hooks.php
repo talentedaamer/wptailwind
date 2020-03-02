@@ -1,11 +1,19 @@
 <?php
+/*
+ |-------------------------------------------------
+ | Theme Action Hooks
+ |-------------------------------------------------
+ |
+ | All action hooks are placed in this file
+ |
+ | @package wptailwind
+ |
+ */
 
-add_action( 'wptw_loop', 'wptw_do_loop', 10 );
-
-add_action( 'wptw_sidebar', 'wptw_do_sidebar', 10 );
-
-add_action( 'wptw_before_while_have_posts', 'wptw_do_archive_page_title', 20 );
-add_action( 'wptw_before_while_have_posts', 'wptw_do_search_page_title', 20 );
+# exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /*
 |-------------------------------------------------
@@ -36,21 +44,94 @@ add_action( 'wptw_after_header', 'wptw_custom_header_image' );
 
 /*
 |-------------------------------------------------
-| single home page post title
+| Blog Page Title
 |-------------------------------------------------
 |
-| display on single home page title above the loop
+| display on blog page above the loop set in
+| settings under following.
+| settings -> reading -> a static page -> posts page
 |
 */
-// TODO : test this
-if ( ! function_exists( 'wptw_home_page_title' ) ) :
-	function wptw_home_page_title() {
+if ( ! function_exists( 'wptw_posts_page_title' ) ) :
+	function wptw_posts_page_title() {
 		if ( is_home() && ! is_front_page() ) :
-			single_post_title();
+			$title = sprintf(
+				'<h1 class="entry-title">%1$s</h1>',
+				single_post_title( '', false )
+			);
+		
+			echo apply_filters( 'wptw_posts_page_title', $title );
 		endif;
 	}
 endif;
-add_action( 'wptw_before_while_have_posts', 'wptw_home_page_title' );
+add_action( 'wptw_before_while_have_posts', 'wptw_posts_page_title', 10 );
+
+/*
+|-------------------------------------------------
+| Archive Page Title
+|-------------------------------------------------
+|
+| display archive page title above the loop
+|
+*/
+if ( ! function_exists( 'wptw_archive_page_title' ) ) :
+	function wptw_archive_page_title() {
+		if ( is_archive() ) {
+			$title = sprintf(
+				'<h1 class="archive-title">%1$s</h1>',
+				get_the_archive_title()
+			);
+			
+			if ( get_the_archive_description() ) {
+				$description = sprintf(
+					'<div class="archive-description mt-2">%1$s</div>',
+					get_the_archive_description()
+				);
+				
+				$archive_title = sprintf(
+					'<div class="archive-page-header mb-8">%1$s %2$s</div>',
+					$title,
+					$description
+				);
+			} else {
+				$archive_title = sprintf(
+					'<div class="archive-page-header mb-8">%1$s</div>',
+					$title
+				);
+			}
+			
+			echo apply_filters( 'wptw_archive_page_title', $archive_title );
+		}
+	}
+endif;
+add_action( 'wptw_before_while_have_posts', 'wptw_archive_page_title', 20 );
+
+/*
+|-------------------------------------------------
+| Search Page Title
+|-------------------------------------------------
+|
+| display search page title above the loop
+|
+*/
+if ( ! function_exists( 'wptw_search_page_title' ) ) :
+	function wptw_search_page_title() {
+		if ( is_search() ) {
+			$title = sprintf(
+				__( 'Results Filtered by: %s', 'wptailwind' ),
+				get_search_query()
+			);
+			
+			$search_title = sprintf(
+				'<div class="archive-page-header mb-8"><h1 class="archive-title">%s</h1></div>',
+				$title
+			);
+			
+			echo apply_filters( 'wptw_search_page_title', $search_title );
+		}
+	}
+endif;
+add_action( 'wptw_before_while_have_posts', 'wptw_search_page_title', 20 );
 
 /*
 |-------------------------------------------------

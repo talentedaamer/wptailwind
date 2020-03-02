@@ -7,6 +7,7 @@
 | standard loop placed in function for DRY
 |
 */
+
 function wptw_do_loop() {
 	if ( is_singular() ) {
 		wptw_single_loop();
@@ -14,14 +15,17 @@ function wptw_do_loop() {
 		wptw_standard_loop();
 	}
 }
+add_action( 'wptw_loop', 'wptw_do_loop', 10 );
+
 
 function wptw_standard_loop() {
 	if ( have_posts() ) {
 		
 		/**
 		 * hook: wptw_before_while_have_posts
-		 * @hooked : wptw_home_single_post_title 10
-		 * @hooked: wptw_do_archive_page_title 20
+		 * @hooked: wptw_posts_page_title 10
+		 * @hooked: wptw_archive_page_title 20
+		 * @hooked: wptw_search_page_title 20
 		 */
 		do_action( 'wptw_before_while_have_posts' );
 		

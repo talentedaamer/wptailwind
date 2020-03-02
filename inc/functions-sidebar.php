@@ -81,3 +81,15 @@ if ( ! function_exists( 'wptw_register_sidebar' ) ) :
 	
 	add_action( 'widgets_init', 'wptw_register_sidebar' );
 endif;
+
+/**
+ * dispkay sidebar template sidebar.php or sidebar-{name}.php
+ *
+ * @param string $sidebar sidebar name e.g for sidebar-page.php name will be 'page'
+ */
+if ( ! function_exists( 'wptw_do_sidebar' ) ) :
+	function wptw_do_sidebar( $sidebar = '' ) {
+		get_sidebar( $sidebar );
+	}
+endif;
+add_action( 'wptw_sidebar', 'wptw_do_sidebar', 10 );

@@ -15,12 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/**
- * if no widget added, return;
- */
+#if no widget added, return;
 if ( ! is_active_sidebar( 'sidebar-1' ) ) {
 	return;
 }
-?>
 
-<?php echo dynamic_sidebar( 'sidebar-1' ); ?>
+echo dynamic_sidebar( 'sidebar-1' );

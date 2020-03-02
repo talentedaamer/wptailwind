@@ -13,13 +13,10 @@ module.exports = {
         },
         fontFamily: {
             sans: [
-                // '"PT Sans"',
                 'Lato',
                 'sans-serif'
             ],
             serif: [
-                // '"Playfair Display"',
-                // 'serif',
                 'Raleway',
                 'sans-serif',
             ],

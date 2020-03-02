@@ -48,7 +48,7 @@ if ( post_password_required() ) {
         <div class="comment-list">
 			<?php
 			wp_list_comments( array(
-				'walker' => new wptw_comment_walker(),
+				'walker' => new WPTW_Comment_Walker(),
 				'avatar_size' => 120,
 				'style' => 'div',
 				'short_ping' => true,

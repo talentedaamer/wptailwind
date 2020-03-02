@@ -16,7 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-add_filter( 'comment_form_default_fields', 'wptw_comment_form_fields' );
 function wptw_comment_form_fields( $fields ) {
 	$commenter = wp_get_current_commenter();
 	$req       = get_option( 'require_name_email' );
@@ -67,6 +66,7 @@ function wptw_comment_form_fields( $fields ) {
 	
 	return $fields;
 }
+add_filter( 'comment_form_default_fields', 'wptw_comment_form_fields' );
 
 add_filter( 'comment_form_defaults', 'wptw_comment_form' );
 function wptw_comment_form( $args ) {

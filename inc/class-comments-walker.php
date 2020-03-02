@@ -1,7 +1,23 @@
 <?php
+/*
+ |-------------------------------------------------
+ | WPTW_Comment_Walker Class
+ |-------------------------------------------------
+ |
+ | Class to extend Walker Comment to match markup
+ | according to wptailwind classes
+ |
+ | @package wptailwind
+ |
+ */
 
-if ( ! class_exists( 'wptw_comment_walker' ) ) {
-	class wptw_comment_walker extends Walker_Comment {
+# exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+if ( ! class_exists( 'WPTW_Comment_Walker' ) ) {
+	class WPTW_Comment_Walker extends Walker_Comment {
 		protected function html5_comment( $comment, $depth, $args ) {
 			$tag                = ( 'div' === $args[ 'style' ] ) ? 'div' : 'li';
 			$comment_author_url = get_comment_author_url( $comment );
@@ -85,7 +101,6 @@ if ( ! class_exists( 'wptw_comment_walker' ) ) {
 				}
 				?>
             </article>
-			
 			<?php
 		}
 	}

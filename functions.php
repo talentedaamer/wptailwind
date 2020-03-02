@@ -118,14 +118,15 @@ add_action( 'after_setup_theme', 'wptailwind_content_width', 0 );
 
 /*
  |-------------------------------------------------
- | Theme Logo or site title
+ | Site Title
  |-------------------------------------------------
  |
- | Display display site title or logo
+ | Function to display site title or logo default
+ | is site title
  |
  */
-if ( ! function_exists( 'wptw_logo' ) ) :
-	function wptw_logo() {
+if ( ! function_exists( 'wptw_site_logo' ) ) :
+	function wptw_site_logo() {
 		$logo = sprintf(
 			'<h1 class="font-bold text-2xl"><a href="%s">%s</a></h1>',
 			esc_url( get_home_url( '/' ) ),
@@ -135,6 +136,30 @@ if ( ! function_exists( 'wptw_logo' ) ) :
 		$logo = apply_filters( 'wptw_logo_markup', $logo );
 		
 		echo $logo;
+	}
+endif;
+
+/*
+ |-------------------------------------------------
+ | Site Description
+ |-------------------------------------------------
+ |
+ | Function to display description or tagline
+ | default is site description.
+ |
+ */
+if ( ! function_exists( 'wptw_site_description' ) ) :
+	function wptw_site_description() {
+		$description = '';
+		$site_desc = get_bloginfo( 'description' );
+		if ( $site_desc || is_customize_preview() ) :
+            $description = sprintf(
+            	'<p class="site-desc text-gray-700">%s</p>',
+	            $site_desc
+            );
+		endif;
+		
+		echo apply_filters( 'wptw_site_description', $description, $site_desc );
 	}
 endif;
 
@@ -191,4 +216,6 @@ require WPTW_INC_DIR_PATH . 'functions-filter-hooks.php';
 require WPTW_INC_DIR_PATH . 'functions-templates.php';
 require WPTW_INC_DIR_PATH . 'functions-comments.php';
 require WPTW_INC_DIR_PATH . 'functions-layout-classes.php';
+# classes
+require WPTW_INC_DIR_PATH . 'class-nav-walker.php';
 require WPTW_INC_DIR_PATH . 'class-comments-walker.php';

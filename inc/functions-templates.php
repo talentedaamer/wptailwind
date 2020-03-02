@@ -304,37 +304,6 @@ if ( ! function_exists( 'wptw_posts_pagination' ) ) :
 	}
 endif;
 
-/**
- * dispkay sidebar template sidebar.php or sidebar-{name}.php
- *
- * @param string $sidebar sidebar name e.g for sidebar-page.php name will be 'page'
- */
-function wptw_do_sidebar( $sidebar = '' ) {
-	get_sidebar( $sidebar );
-}
-
-function wptw_do_archive_page_title() {
-	if ( is_archive() ) {
-		printf(
-			'<div class="archive-page-header mb-8"><h1 class="archive-title">%1$s</h1><div class="archive-description mt-2">%2$s</div></div>',
-			get_the_archive_title(),
-			get_the_archive_description()
-		);
-	}
-}
-
-function wptw_do_search_page_title() {
-	if ( is_search() ) {
-		printf(
-			'<div class="archive-page-header mb-8"><h1 class="archive-title">%s</h1></div>',
-			sprintf(
-				__( 'Results Filtered by: %s', 'wptailwind' ),
-				get_search_query()
-			)
-		);
-	}
-}
-
 function wptw_comments_nav() {
 	if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : ?>
         <ul id="comments-nav" class="comments-nav flex justify-between mb-4">
